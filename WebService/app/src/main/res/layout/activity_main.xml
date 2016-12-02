@@ -38,11 +38,9 @@
                 android:layout_weight="1" />
         </LinearLayout>
 
-        <TextView
+        <ListView
             android:layout_width="match_parent"
-            android:layout_height="372dp"
-            android:text="Chargement..."
-            android:id="@+id/tvCityList" />
+            android:layout_height="383dp" />
 
         <LinearLayout
             android:orientation="horizontal"
