@@ -12,34 +12,37 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String location = "39.6034810,-119.6822510";
-    final String timestamp = "1480676276";
-    final String key = "AIzaSyAeHQCeCI1DuiHVvvu3kS4rH-Jl8M1CJLM";
+    private TextView tvCityList;
+    private JSONArray cities;
+    //private RequestQueueSingleton queueSingleton;
+    private RequestQueue queue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Au début on affiche la liste
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TimeZone tz = TimeZone.getTimeZone("Europe/Paris");
-        final TextView mTextView = (TextView) findViewById(R.id.tv1);
+
+        tvCityList = (TextView) findViewById(R.id.tvCityList);
+        this.cities = null;
+
+        //queueSingleton = new RequestQueueSingleton(this);
 
         // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
+        queue = Volley.newRequestQueue(this);
 
-        String url ="https://maps.googleapis.com/maps/api/timezone/json?"
-            +"location=" + location
-            +"&timestamp=" + timestamp
-            +"&key=" + key;
+        String ipServer = "http://10.0.2.1";
+        String url = ipServer + "/villes";
+        executeFromHttpRequest(url);
+    }
+
+    public void executeFromHttpRequest(String url) {
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -47,45 +50,50 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         // Display the first 500 characters of the response string.
-                        mTextView.setText("Il est : "+ calculateTime(response));
+                        createListFromJsonResponse(response);
+                        fillCityList();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                mTextView.setText("That didn't work!");
+                tvCityList.setText("Erreur lors de la récupération des données : " + error);
             }
         });
-// Add the request to the RequestQueue.
+        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 
-    private String calculateTime(String response) {
-        if(null != response) {
+    public boolean createListFromJsonResponse(String jsonResponse) {
+        if (null != jsonResponse) {
+
             try {
-                JSONObject responseJSONObject = new JSONObject(response);
-                int dstOffset = responseJSONObject.getInt("dstOffset");
-                int rawOffset = responseJSONObject.getInt("rawOffset");
-                int res = Integer.parseInt(this.timestamp) + dstOffset + rawOffset;
-
-
-                return this.formatDate((long) (res * 1000));
-
+                this.cities = new JSONArray(jsonResponse);
             }
-            catch (final JSONException jsonE) {
 
+            catch (JSONException ex) {
+                ex.printStackTrace();
+                return false;
             }
         }
 
-        return null;
+        return false;
     }
 
-    private String formatDate(long milliseconds) /* This is your topStory.getTime()*1000 */ {
-        DateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliseconds);
-        TimeZone tz = TimeZone.getDefault();
-        sdf.setTimeZone(tz);
-        return sdf.format(calendar.getTime());
+    public boolean fillCityList() {
+
+        StringBuffer strToDisplay = new StringBuffer();
+        try {
+            for(int i = 0 ; i < this.cities.length() ; i++ ) {
+                strToDisplay.append(this.cities.getJSONObject(i).getString("Nom_Ville") + "\n");
+            }
+
+            this.tvCityList.setText(strToDisplay.toString());
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+        return false;
     }
 }

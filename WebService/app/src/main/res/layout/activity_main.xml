@@ -10,9 +10,52 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.lp.webservice.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:id="@+id/tv1" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="228dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/editText2"
+                android:hint="Ville" />
+
+            <Button
+                android:text="Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/button"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="372dp"
+            android:text="Chargement..."
+            android:id="@+id/tvCityList" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="Détails..."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/button2"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>
