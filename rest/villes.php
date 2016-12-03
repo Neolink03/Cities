@@ -4,12 +4,19 @@
  * Partie SERVEUR du service web RESTful. 
  *********************************************************/
 
+require_once('./db_infos.php');
+
 /**
  * Connexion au SGBD
  */
 
 try {
-	$pdo = new PDO('mysql:host=localhost;port=3306;dbname=bd_rest', 'root', '');
+	$pdo = new PDO(
+		'mysql:host='.$host
+		.';port='.$port
+		.';dbname='.$dbname
+		,$user
+		,$pwd);
 } catch (PDOException $e) {
 	die("Erreur : " . $e->getMessage());
 }
