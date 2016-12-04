@@ -1,8 +1,15 @@
 package com.example.lp.webservice;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -15,9 +22,14 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
-    private TextView tvCityList;
+    private ListView lvCityList;
+    private TextView tvSelectedCityInfos;
     private JSONArray cities;
     //private RequestQueueSingleton queueSingleton;
     private RequestQueue queue;
@@ -29,13 +41,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvCityList = (TextView) findViewById(R.id.tvCityList);
+        lvCityList = (ListView) findViewById(R.id.lvCityList);
+        tvSelectedCityInfos = (TextView) findViewById(R.id.tvSelectedCityInfos);
         this.cities = null;
-
-        //queueSingleton = new RequestQueueSingleton(this);
-
-        // Instantiate the RequestQueue.
-        queue = Volley.newRequestQueue(this);
 
         String ipServer = "http://10.0.2.1";
         String url = ipServer + "/villes";
@@ -56,22 +64,27 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                tvCityList.setText("Erreur lors de la récupération des données : " + error);
+                tvSelectedCityInfos.setText("Erreur lors de la récupération des données : " + error);
             }
         });
         // Add the request to the RequestQueue.
-        queue.add(stringRequest);
+        RequestQueueSingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
+    /**
+     * Fetch the cities infos from the JSON response of the rest server
+     * @param jsonResponse
+     * @return boolean
+     */
     public boolean createListFromJsonResponse(String jsonResponse) {
         if (null != jsonResponse) {
-
             try {
                 this.cities = new JSONArray(jsonResponse);
             }
 
             catch (JSONException ex) {
                 ex.printStackTrace();
+                tvSelectedCityInfos.setText("Erreur : " + ex.getMessage());
                 return false;
             }
         }
@@ -79,21 +92,102 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /**
+     * Fill the listView with the list of cities
+     * @return boolean
+     */
     public boolean fillCityList() {
 
-        StringBuffer strToDisplay = new StringBuffer();
         try {
+            // Convertinh datas from cities to ArrayList of String
+            final ArrayList<String> list = new ArrayList<String>();
             for(int i = 0 ; i < this.cities.length() ; i++ ) {
-                strToDisplay.append(this.cities.getJSONObject(i).getString("Nom_Ville") + "\n");
+                list.add(this.cities.getJSONObject(i).getString("Nom_Ville"));
             }
 
-            this.tvCityList.setText(strToDisplay.toString());
+            // Converting list of cities to inputs of the ListView
+            final ArrayAdapter adapter = new StableArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, list);
+            lvCityList.setAdapter(adapter);
+
+            // Handling click on an item of the list
+            lvCityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, final View view,
+                                        int position, long id) {
+
+                    // Get position of the clicked item and display its infos
+                    final String item = (String) parent.getItemAtPosition(position);
+                }
+
+            });
+
+            return true;
         }
         catch (JSONException ex) {
             ex.printStackTrace();
+            tvSelectedCityInfos.setText("Erreur : " + ex.getMessage());
             return false;
         }
-
-        return false;
     }
+
+    /**
+     * To adapt an ArrayList content to a ListView
+     */
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+
+            // Puting the item of the ArrayList in the ListView
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+    }
+
+    /*
+    private class CityListAdapterView extends AdapterView {
+
+        public CityListAdapterView() {
+            super;
+        }
+
+        @Override
+        public Adapter getAdapter() {
+            return null;
+        }
+
+        @Override
+        public void setAdapter(Adapter adapter) {
+
+        }
+
+        @Override
+        public View getSelectedView() {
+            return null;
+        }
+
+        @Override
+        public void setSelection(int i) {
+
+        }
+    }
+    */
+
 }

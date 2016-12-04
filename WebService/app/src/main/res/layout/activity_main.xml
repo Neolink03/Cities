@@ -23,37 +23,37 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:layout_width="228dp"
+                android:layout_width="195dp"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/editText2"
+                android:id="@+id/tfCitySearch"
                 android:hint="Ville" />
 
             <Button
-                android:text="Button"
-                android:layout_width="match_parent"
+                android:text="Rechercher"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/button"
+                android:id="@+id/btCitySearch"
                 android:layout_weight="1" />
         </LinearLayout>
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="383dp" />
+            android:layout_height="263dp"
+            android:id="@+id/lvCityList" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:text="Informations"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:id="@+id/tvSelectedCityInfosTitle"
+            android:layout_weight="0.00" />
 
-            <Button
-                android:text="Détails..."
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/button2"
-                android:layout_weight="1" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tvSelectedCityInfos" />
 
     </LinearLayout>
 </RelativeLayout>
