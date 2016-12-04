@@ -56,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
                         createListFromJsonResponse(response);
                         fillCityList();
                     }
