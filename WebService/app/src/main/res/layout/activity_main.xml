@@ -40,20 +40,8 @@
 
         <ListView
             android:layout_width="match_parent"
-            android:layout_height="263dp"
-            android:id="@+id/lvCityList" />
-
-        <TextView
-            android:text="Informations"
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvSelectedCityInfosTitle"
-            android:layout_weight="0.00" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/tvSelectedCityInfos" />
+            android:id="@+id/lvCityList" />
 
     </LinearLayout>
 </RelativeLayout>

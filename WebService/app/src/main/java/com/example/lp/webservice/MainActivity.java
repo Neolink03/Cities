@@ -3,6 +3,7 @@ package com.example.lp.webservice;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -29,7 +30,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ListView lvCityList;
-    private TextView tvSelectedCityInfos;
     private JSONArray cities;
     //private RequestQueueSingleton queueSingleton;
     private RequestQueue queue;
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lvCityList = (ListView) findViewById(R.id.lvCityList);
-        tvSelectedCityInfos = (TextView) findViewById(R.id.tvSelectedCityInfos);
         this.cities = null;
 
         String ipServer = "http://10.0.2.1";
@@ -64,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                tvSelectedCityInfos.setText("Erreur lors de la récupération des données : " + error);
+                //tvSelectedCityInfos.setText("Erreur lors de la récupération des données : " + error);
             }
         });
         // Add the request to the RequestQueue.
@@ -84,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
             catch (JSONException ex) {
                 ex.printStackTrace();
-                tvSelectedCityInfos.setText("Erreur : " + ex.getMessage());
+                //tvSelectedCityInfos.setText("Erreur : " + ex.getMessage());
                 return false;
             }
         }
@@ -112,12 +111,16 @@ public class MainActivity extends AppCompatActivity {
 
             // Handling click on an item of the list
             lvCityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
                 @Override
                 public void onItemClick(AdapterView<?> parent, final View view,
                                         int position, long id) {
 
                     // Get position of the clicked item and display its infos
                     final String item = (String) parent.getItemAtPosition(position);
+                    Intent cityDetailIntent = new Intent(MainActivity.this, CityDetailActivity.class);
+                    cityDetailIntent.putExtra("cityName", item.toString());
+                    startActivity(cityDetailIntent);
                 }
 
             });
@@ -126,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (JSONException ex) {
             ex.printStackTrace();
-            tvSelectedCityInfos.setText("Erreur : " + ex.getMessage());
+            //tvSelectedCityInfos.setText("Erreur : " + ex.getMessage());
             return false;
         }
     }
@@ -160,34 +163,4 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-    /*
-    private class CityListAdapterView extends AdapterView {
-
-        public CityListAdapterView() {
-            super;
-        }
-
-        @Override
-        public Adapter getAdapter() {
-            return null;
-        }
-
-        @Override
-        public void setAdapter(Adapter adapter) {
-
-        }
-
-        @Override
-        public View getSelectedView() {
-            return null;
-        }
-
-        @Override
-        public void setSelection(int i) {
-
-        }
-    }
-    */
-
 }
