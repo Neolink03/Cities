@@ -1,6 +1,5 @@
 package com.example.lp.webservice;
 
-import android.renderscript.Double2;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -51,7 +50,7 @@ public class CityDetailActivity extends AppCompatActivity {
             }
         });
         // Add the request to the RequestQueue.
-        RequestQueueSingleton.getInstance(this).addToRequestQueue(stringRequest);
+        RequestQueue.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     public boolean fetchCityDetailsFromJsonResponse(String jsonResponse) {

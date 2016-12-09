@@ -1,30 +1,32 @@
 package com.example.lp.webservice;
 
+import android.content.Context;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 /**
  * Created by lp on 02/12/2016.
  */
 
-public class CityList extends HashMap<String, City> {
+public class CityList {
 
-    public CityList(String jsonResponse) {
+    public static ArrayList createCityNameListFromJsonArray(JSONArray cityListJsonArray) throws JSONException{
 
-        if (null != jsonResponse) {
-            try {
-                JSONArray cities = new JSONArray(jsonResponse);
+        ArrayList<String> cityNameList = new ArrayList<String>();
 
-
-            }
-
-            catch (JSONException ex) {
-                ex.printStackTrace();
-            }
+        for(int i = 0 ; i < cityListJsonArray.length() ; i++ ) {
+            cityNameList.add(cityListJsonArray.getJSONObject(i).getString("Nom_Ville"));
         }
+
+        return new ArrayList<String>(cityNameList);
     }
 }

@@ -3,32 +3,31 @@ package com.example.lp.webservice;
 import android.content.Context;
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
  * Created by lp on 02/12/2016.
  */
 
-public class RequestQueueSingleton {
+public class RequestQueue {
 
-    private static RequestQueueSingleton mInstance;
-    private RequestQueue mRequestQueue;
+    private static RequestQueue mInstance;
+    private com.android.volley.RequestQueue mRequestQueue;
     private Context mCtx;
 
-    private RequestQueueSingleton(Context context) {
+    private RequestQueue(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
     }
 
-    public static synchronized RequestQueueSingleton getInstance(Context context) {
+    public static synchronized RequestQueue getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new RequestQueueSingleton(context);
+            mInstance = new RequestQueue(context);
         }
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
+    public com.android.volley.RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
