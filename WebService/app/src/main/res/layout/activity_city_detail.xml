@@ -21,7 +21,6 @@
         android:textStyle="normal|bold" />
 
     <TextView
-        android:text="Chargement..."
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvCityDetails" />

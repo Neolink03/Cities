@@ -27,7 +27,6 @@ public class CityDashboardActivity extends AppCompatActivity {
 
     private ListView lvCityList;
     private ArrayList<String> cityNameList;
-    private RequestQueue queue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,30 +41,34 @@ public class CityDashboardActivity extends AppCompatActivity {
     public void displayListNameCityList() {
         String ipServer = "http://10.0.2.1";
         String url = ipServer + "/villes";
+
         JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray cityListJsonArray) {
                         fillCityNameListFromCityJsonArray(cityListJsonArray);
                         fillCityListView();
+                        setCityViewListener();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
+                        ToastMessage.displayUnexpectedResponseInToast(getApplicationContext());
                     }
                 });
 
-        queue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
+        RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
     }
 
-    public void fillCityNameListFromCityJsonArray(JSONArray cityJsonArray) {
+    public void fillCityNameListFromCityJsonArray(JSONArray cityJSONArray) {
 
         try {
-            this.cityNameList = CityList.createCityNameListFromJsonArray(cityJsonArray);
+            this.cityNameList = CityList.createCityNameListFromJsonArray(cityJSONArray);
         }
         catch (JSONException e) {
             e.printStackTrace();
+            ToastMessage.displayJSONReadErrorInToast(getApplicationContext());
         }
     }
 
@@ -78,22 +81,28 @@ public class CityDashboardActivity extends AppCompatActivity {
             final ArrayAdapter adapter = new StableArrayAdapter(this,
                     android.R.layout.simple_list_item_1, this.cityNameList);
             lvCityList.setAdapter(adapter);
+    }
 
-            // Handling click on an item of the list
-            lvCityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    public void setCityViewListener() {
+        lvCityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-                @Override
-                public void onItemClick(AdapterView<?> parent, final View view,
-                                        int position, long id) {
+            @Override
+            public void onItemClick(AdapterView<?> parent, final View view,
+                                    int position, long id) {
 
-                    // Get position of the clicked item and display its infos
-                    final String item = (String) parent.getItemAtPosition(position);
-                    Intent cityDetailIntent = new Intent(CityDashboardActivity.this, CityDetailActivity.class);
-                    cityDetailIntent.putExtra("cityName", item.toString());
-                    startActivity(cityDetailIntent);
-                }
+                // Get position of the clicked item and display its infos
+                final String item = (String) parent.getItemAtPosition(position);
+                displayCityDetailOfClickedItem(item);
 
-            });
+            }
+
+            private void displayCityDetailOfClickedItem(String item) {
+                Intent cityDetailIntent = new Intent(CityDashboardActivity.this, CityDetailActivity.class);
+                cityDetailIntent.putExtra("cityName", item);
+                startActivity(cityDetailIntent);
+            }
+
+        });
     }
 
     /**

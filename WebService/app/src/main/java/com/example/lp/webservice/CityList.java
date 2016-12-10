@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 
 /**
- * Created by lp on 02/12/2016.
+ * Created by Neolink03 on 02/12/2016.
  */
 
-public class CityList {
+class CityList {
 
-    public static ArrayList createCityNameListFromJsonArray(JSONArray cityListJsonArray) throws JSONException{
+    static ArrayList<String> createCityNameListFromJsonArray(JSONArray cityListJsonArray) throws JSONException{
 
         ArrayList<String> cityNameList = new ArrayList<String>();
 
