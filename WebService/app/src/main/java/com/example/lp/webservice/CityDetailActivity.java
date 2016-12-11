@@ -14,11 +14,15 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
 
 public class CityDetailActivity extends AppCompatActivity {
 
-    private TextView tvCityDetails;
     private TextView tvCityName;
+
+    private ArrayList<TextView> cityDetailTvs;
 
     private String cityName;
     private City cityDetails;
@@ -31,9 +35,19 @@ public class CityDetailActivity extends AppCompatActivity {
         tvCityName = (TextView) findViewById(R.id.tvCityName);
 
         this.cityName = fetchCityNameFromExtras();
-
+        findTextViews();
         displayCityNameTitle();
         displayCityDetails();
+    }
+
+    public void findTextViews() {
+        this.cityDetailTvs = new ArrayList<TextView>();
+        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvPostalCode) );
+        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvRegionCode) );
+        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvInseeCode) );
+        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvLatitude) );
+        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvLongitude) );
+        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvRemoteness) );
     }
 
     public String fetchCityNameFromExtras() {
@@ -42,7 +56,6 @@ public class CityDetailActivity extends AppCompatActivity {
 
     public void displayCityNameTitle() {
         tvCityName.setText(cityName);
-        tvCityDetails = (TextView) findViewById(R.id.tvCityDetails);
     }
 
     public void displayCityDetails() {
@@ -82,14 +95,11 @@ public class CityDetailActivity extends AppCompatActivity {
     }
 
     public void fillCityDetails() {
-        StringBuffer details = new StringBuffer();
-            details.append("Code Postal : " + Integer.toString(this.cityDetails.getPostalCode()) + "\n");
-            details.append("Code INSEE : " + Integer.toString(this.cityDetails.getInseeCode())+ "\n");
-            details.append("Code région : " + this.cityDetails.getRegionCode() + "\n");
-            details.append("Latitude : " + Double.toString(this.cityDetails.getLatitude()) + "\n");
-            details.append("Longitude : " + Double.toString(this.cityDetails.getLongitude()) + "\n");
-            details.append("Éloignement : " + Double.toString(this.cityDetails.getRemoteness()) + "\n");
-            this.tvCityDetails.setText(details.toString());
+
+        ArrayList<String> cityDetailsInfos = this.cityDetails.getCharacteristicsAsArray();
+        for (int i = 0 ; i < this.cityDetailTvs.size() ; i++) {
+            this.cityDetailTvs.get(i).setText(cityDetailsInfos.get(i));
+        }
     }
 
     @Override

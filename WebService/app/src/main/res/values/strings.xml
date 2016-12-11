@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Villes de France</string>
+    <string name="tvPostalCodeLabel">Code postal : </string>
+    <string name="tvInseeCodeLabel">Code INSEE : </string>
+    <string name="tvRegionCodeLabel">Code région : </string>
+    <string name="tvLatitudeLabel">Latitude : </string>
+    <string name="tvLongitudeLabel">Longitude : </string>
+    <string name="tvRemotenessLabel">Éloignement : </string>
+    <string name="defaultCityName">Ville</string>
 </resources>

@@ -14,8 +14,8 @@ public class City {
 
     private String name;
     private int postalCode;
-    private int InseeCode;
-    private String RegionCode;
+    private int inseeCode;
+    private String regionCode;
     private double latitude;
     private double longitude;
     private double remoteness;
@@ -23,8 +23,8 @@ public class City {
     public City(String name, int postalCode, int inseeCode, String regionCode, double latitude, double longitude, double remoteness) {
         this.name = name;
         this.postalCode = postalCode;
-        InseeCode = inseeCode;
-        RegionCode = regionCode;
+        this.inseeCode = inseeCode;
+        this.regionCode = regionCode;
         this.latitude = latitude;
         this.longitude = longitude;
         this.remoteness = remoteness;
@@ -45,6 +45,17 @@ public class City {
         );
     }
 
+    public ArrayList<String> getCharacteristicsAsArray() {
+        ArrayList<String> cityCharacteristics = new ArrayList<String>();
+        cityCharacteristics.add( Integer.toString(this.postalCode) + "\n" );
+        cityCharacteristics.add( Integer.toString(this.inseeCode)+ "\n");
+        cityCharacteristics.add( this.regionCode + "\n");
+        cityCharacteristics.add( Double.toString(this.latitude) + "\n");
+        cityCharacteristics.add( Double.toString(this.longitude) + "\n");
+        cityCharacteristics.add( Double.toString(this.remoteness) + "\n");
+        return cityCharacteristics;
+    }
+
     public String getName() {
         return name;
     }
@@ -54,11 +65,11 @@ public class City {
     }
 
     public int getInseeCode() {
-        return InseeCode;
+        return inseeCode;
     }
 
     public String getRegionCode() {
-        return RegionCode;
+        return regionCode;
     }
 
     public double getLatitude() {
