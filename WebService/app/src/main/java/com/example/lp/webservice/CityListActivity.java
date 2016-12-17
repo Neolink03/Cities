@@ -27,7 +27,6 @@ import java.util.List;
 public class CityListActivity extends AppCompatActivity {
 
     private ListView cityList;
-    private Button citySearchButton;
     private EditText citySearchBar;
     private ArrayList<String> cityNameList;
 
@@ -42,30 +41,37 @@ public class CityListActivity extends AppCompatActivity {
 
         cityList = (ListView) findViewById(R.id.lvCityList);
         citySearchBar = (EditText) findViewById(R.id.tfCitySearch);
-        citySearchButton = (Button) findViewById(R.id.btCitySearch);
 
         displayListNameCityList("http://10.0.2.1/villes");
     }
 
     public void displayListNameCityList(String url) {
 
-        JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray cityListJsonArray) {
-                        fillCityNameListFromCityJsonArray(cityListJsonArray);
-                        fillCityListView();
-                        setCityViewListener();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        ToastMessage.displayUnexpectedResponseInToast(getApplicationContext());
-                    }
-                });
+        if(NetworkChecker.isNetworkActivated(this)) {
 
-        RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
+            JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray cityListJsonArray) {
+                            fillCityNameListFromCityJsonArray(cityListJsonArray);
+                            fillCityListView();
+                            setCityViewListener();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            ToastMessage.displayUnexpectedResponseInToast(getApplicationContext());
+                        }
+                    });
+
+            RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
+        }
+        else {
+            ToastMessage.noNetworkConnection(this);
+        }
+
+
     }
 
     public void fillCityNameListFromCityJsonArray(JSONArray cityJSONArray) {
@@ -91,7 +97,7 @@ public class CityListActivity extends AppCompatActivity {
             cityList.setAdapter(adapter);
         }
         else {
-            ToastMessage.noCityFoundMessage(this);
+            ToastMessage.noCityFound(this);
         }
     }
 
@@ -123,6 +129,9 @@ public class CityListActivity extends AppCompatActivity {
 
         if(!searchedCity.isEmpty()) {
             displayListNameCityList("http://10.0.2.1/villes/" + searchedCity);
+        }
+        else {
+            displayListNameCityList("http://10.0.2.1/villes");
         }
     }
 

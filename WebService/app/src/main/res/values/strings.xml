@@ -7,4 +7,6 @@
     <string name="tvLongitudeLabel">Longitude : </string>
     <string name="tvRemotenessLabel">Éloignement : </string>
     <string name="defaultCityName">Ville</string>
+    <string name="citySearchBarHint">Ville</string>
+    <string name="SearchButtonText">Rechercher</string>
 </resources>

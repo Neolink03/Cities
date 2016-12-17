@@ -1,10 +1,8 @@
 package com.example.lp.webservice;
 
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -14,7 +12,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -34,10 +31,15 @@ public class CityDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city_detail);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
 
-        this.cityName = fetchCityNameFromExtras();
-        findTextViews();
-        displayCityNameTitle();
-        displayCityDetails();
+        if(NetworkChecker.isNetworkActivated(this)) {
+            this.cityName = fetchCityNameFromExtras();
+            findTextViews();
+            displayCityNameTitle();
+            displayCityDetails();
+        }
+        else {
+            ToastMessage.noNetworkConnection(this);
+        }
     }
 
     public void findTextViews() {
@@ -58,11 +60,15 @@ public class CityDetailActivity extends AppCompatActivity {
         tvCityName.setText(cityName);
     }
 
+    //test in db :
+    // select Nom_Ville, Code_Postal, Code_INSEE, Code_Region, Latitude, Longitude, Eloignement
+    // from villes
+    // where Nom_Ville LIKE "%Ambl" limit 30;
+
     public void displayCityDetails() {
 
         String ipServer = "http://10.0.2.1";
         String url = ipServer + "/villes/" + cityName;
-        //select Nom_Ville, Code_Postal, Code_INSEE, Code_Region, Latitude, Longitude, Eloignement from villes where Nom_Ville LIKE "%Ambl" limit 30;
 
         // The request always return a JsonArray
         JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest

@@ -28,11 +28,11 @@
                 android:inputType="textPersonName"
                 android:ems="10"
                 android:id="@+id/tfCitySearch"
-                android:hint="Ville" />
+                android:hint="@string/citySearchBarHint" />
 
             <Button
-                android:text="Rechercher"
-                android:layout_width="wrap_content"
+                android:text="@string/SearchButtonText"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/btCitySearch"
                 android:layout_weight="1"
