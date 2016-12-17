@@ -3,12 +3,13 @@ package com.example.lp.webservice;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.ArrayRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.android.volley.Request;
@@ -23,24 +24,30 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class CityDashboardActivity extends AppCompatActivity {
+public class CityListActivity extends AppCompatActivity {
 
-    private ListView lvCityList;
+    private ListView cityList;
+    private Button citySearchButton;
+    private EditText citySearchBar;
     private ArrayList<String> cityNameList;
+
+    public EditText getCitySearchBar() {
+        return citySearchBar;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Au début on affiche la liste
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_city_list);
 
-        lvCityList = (ListView) findViewById(R.id.lvCityList);
-        displayListNameCityList();
+        cityList = (ListView) findViewById(R.id.lvCityList);
+        citySearchBar = (EditText) findViewById(R.id.tfCitySearch);
+        citySearchButton = (Button) findViewById(R.id.btCitySearch);
+
+        displayListNameCityList("http://10.0.2.1/villes");
     }
 
-    public void displayListNameCityList() {
-        String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes";
+    public void displayListNameCityList(String url) {
 
         JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
@@ -77,14 +84,19 @@ public class CityDashboardActivity extends AppCompatActivity {
      */
     public void fillCityListView() {
 
+        if (!this.cityNameList.isEmpty()) {
             // Converting list of cities to inputs of the ListView
             final ArrayAdapter adapter = new StableArrayAdapter(this,
                     android.R.layout.simple_list_item_1, this.cityNameList);
-            lvCityList.setAdapter(adapter);
+            cityList.setAdapter(adapter);
+        }
+        else {
+            ToastMessage.noCityFoundMessage(this);
+        }
     }
 
     public void setCityViewListener() {
-        lvCityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, final View view,
@@ -97,12 +109,17 @@ public class CityDashboardActivity extends AppCompatActivity {
             }
 
             private void displayCityDetailOfClickedItem(String item) {
-                Intent cityDetailIntent = new Intent(CityDashboardActivity.this, CityDetailActivity.class);
+                Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailActivity.class);
                 cityDetailIntent.putExtra("cityName", item);
                 startActivity(cityDetailIntent);
             }
 
         });
+    }
+
+    public void searchForCityList(View view) {
+        String searchedCity = citySearchBar.getText().toString();
+        displayListNameCityList("http://10.0.2.1/villes/" + searchedCity);
     }
 
     /**

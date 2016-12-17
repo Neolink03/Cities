@@ -23,4 +23,12 @@ public class ToastMessage {
                 android.widget.Toast.LENGTH_LONG);
         toast.show();
     };
+
+    public static void noCityFoundMessage(Context applicationContext) {
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                applicationContext,
+                "Aucun résultat trouvé.",
+                android.widget.Toast.LENGTH_LONG);
+        toast.show();
+    };
 }
