@@ -117,9 +117,13 @@ public class CityListActivity extends AppCompatActivity {
         });
     }
 
-    public void searchForCityList(View view) {
+    public void searchForCityListOnSearchButtonClick(View view) {
+
         String searchedCity = citySearchBar.getText().toString();
-        displayListNameCityList("http://10.0.2.1/villes/" + searchedCity);
+
+        if(!searchedCity.isEmpty()) {
+            displayListNameCityList("http://10.0.2.1/villes/" + searchedCity);
+        }
     }
 
     /**
