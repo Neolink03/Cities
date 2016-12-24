@@ -43,7 +43,7 @@ public class CityListActivity extends AppCompatActivity {
         String searchedCity = citySearchBar.getText().toString();
 
         if(!searchedCity.isEmpty()) {
-            displayListNameCityList("/" + searchedCity);
+            displayListNameCityList(searchedCity);
         }
         else {
             displayListNameCityList("");
@@ -51,6 +51,11 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     public void displayListNameCityList(String city) {
+
+        // TODO : Add a rewrite rule for "localhost/villes/"
+        if(!city.isEmpty()) {
+            city = "/" + city;
+        }
 
         String url = "http://10.0.2.1/villes" + city;
 
