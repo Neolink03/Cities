@@ -34,8 +34,8 @@ public class CityListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_list);
 
-        cityList = (ListView) findViewById(R.id.lvCityList);
-        citySearchBar = (EditText) findViewById(R.id.tfCitySearch);
+        cityList = (ListView) findViewById(R.id.cityListListView);
+        citySearchBar = (EditText) findViewById(R.id.citySearchBarTextField);
     }
 
     public void searchCityList(View searchButton) {
@@ -127,7 +127,7 @@ public class CityListActivity extends AppCompatActivity {
             }
 
             private void displayCityDetails(String item) {
-                Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailActivity.class);
+                Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailsActivity.class);
                 cityDetailIntent.putExtra("cityName", item);
                 startActivity(cityDetailIntent);
             }

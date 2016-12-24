@@ -27,14 +27,14 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/tfCitySearch"
+                android:id="@+id/citySearchBarTextField"
                 android:hint="@string/citySearchBarHint" />
 
             <Button
                 android:text="@string/SearchButtonText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/btCitySearch"
+                android:id="@+id/citySearchButton"
                 android:layout_weight="1"
                 android:onClick="searchCityList" />
         </LinearLayout>
@@ -42,7 +42,7 @@
         <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lvCityList" />
+            android:id="@+id/cityListListView" />
 
     </LinearLayout>
 </RelativeLayout>

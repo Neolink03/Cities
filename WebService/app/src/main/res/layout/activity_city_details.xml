@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.lp.webservice.CityDetailActivity"
+    tools:context="com.example.lp.webservice.CityDetailsActivity"
     android:orientation="vertical">
 
     <TextView
@@ -36,72 +36,72 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvPostalCodeLabel"
+            android:text="@string/postalCodeLabelTextView"
             android:textColor="#000"/>
         <TextView
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvPostalCode"
-            android:textColor="#000"/>
+            android:id="@+id/postalCodeLabelTextView"
+            android:textColor="#000"
+            android:layout_width="wrap_content" />
 
         <!-- Region code -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvRegionCodeLabel"
+            android:text="@string/regionCodeLabelTextView"
             android:textColor="#000"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvRegionCode"
+            android:id="@+id/regionCodeLabelTextView"
             android:textColor="#000"/>
 
         <!-- INSEE code -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvInseeCodeLabel"
+            android:text="@string/inseeCodeLabelTextView"
             android:textColor="#000"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvInseeCode"
+            android:id="@+id/inseeCodeLabelTextView"
             android:textColor="#000"/>
 
         <!-- Latitude -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvLatitudeLabel"
+            android:text="@string/latitudeLabelTextView"
             android:textColor="#000"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvLatitude"
+            android:id="@+id/latitudeLabelTextView"
             android:textColor="#000"/>
 
         <!-- Longitude -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvLongitudeLabel"
+            android:text="@string/longitudeLabelTextView"
             android:textColor="#000"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvLongitude"
+            android:id="@+id/longitudeLabelTextView"
             android:textColor="#000"/>
 
         <!-- Remoteness -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvRemotenessLabel"
+            android:text="@string/remotenessLabelTextView"
             android:textColor="#000"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvRemoteness"
+            android:id="@+id/remotenessLabelTextView"
             android:textColor="#000"/>
 
     </GridLayout>

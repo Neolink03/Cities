@@ -15,11 +15,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class CityDetailActivity extends AppCompatActivity {
+public class CityDetailsActivity extends AppCompatActivity {
 
     private TextView tvCityName;
 
-    private ArrayList<TextView> cityDetailTvs;
+    private ArrayList<TextView> cityDetailTextViews;
 
     private String cityName;
     private City cityDetails;
@@ -28,12 +28,11 @@ public class CityDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_city_detail);
+        setContentView(R.layout.activity_city_details);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
 
         if(NetworkChecker.isNetworkActivated(this)) {
             this.cityName = fetchCityNameFromExtras();
-            findTextViews();
             displayCityNameTitle();
             displayCityDetails();
         }
@@ -42,14 +41,8 @@ public class CityDetailActivity extends AppCompatActivity {
         }
     }
 
-    public void findTextViews() {
-        this.cityDetailTvs = new ArrayList<TextView>();
-        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvPostalCode) );
-        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvRegionCode) );
-        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvInseeCode) );
-        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvLatitude) );
-        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvLongitude) );
-        this.cityDetailTvs.add( (TextView) findViewById(R.id.tvRemoteness) );
+    public void displayGpsCoordinates() {
+
     }
 
     public String fetchCityNameFromExtras() {
@@ -70,42 +63,54 @@ public class CityDetailActivity extends AppCompatActivity {
         String ipServer = "http://10.0.2.1";
         String url = ipServer + "/villes/" + cityName;
 
+        loadCityDetailsTextViews();
+
         // The request always return a JsonArray
         JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
                 (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray cityListJSONArrayResponse) {
-                        fetchCityDetailsFromJSONArray(cityListJSONArrayResponse);
-                        fillCityDetails();
+                        loadCityDetailsFromJSONArray(cityListJSONArrayResponse);
+                        loadCityDetails();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        ToastMessage.displayUnexpectedResponseInToast(getApplicationContext());
+                        ToastMessage.displayUnexpectedResponse(getApplicationContext());
                     }
                 });
 
         RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
     }
 
-    public void fetchCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
+    public void loadCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
         try {
             this.cityDetails = City.createFromJSONArray(cityListJSONArray);
         }
 
         catch (JSONException exception) {
             exception.printStackTrace();
-            ToastMessage.displayJSONReadErrorInToast(getApplicationContext());
+            ToastMessage.displayJSONReadError(getApplicationContext());
         }
     }
 
-    public void fillCityDetails() {
+    public void loadCityDetails() {
 
         ArrayList<String> cityDetailsInfos = this.cityDetails.getCharacteristicsAsArray();
-        for (int i = 0 ; i < this.cityDetailTvs.size() ; i++) {
-            this.cityDetailTvs.get(i).setText(cityDetailsInfos.get(i));
+        for (int i = 0; i < this.cityDetailTextViews.size() ; i++) {
+            this.cityDetailTextViews.get(i).setText(cityDetailsInfos.get(i));
         }
+    }
+
+    public void loadCityDetailsTextViews() {
+        this.cityDetailTextViews = new ArrayList<TextView>();
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.postalCodeLabelTextView) );
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.regionCodeLabelTextView) );
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.inseeCodeLabelTextView) );
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.latitudeLabelTextView) );
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.longitudeLabelTextView) );
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.remotenessLabelTextView) );
     }
 
     @Override

@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Villes de France</string>
-    <string name="tvPostalCodeLabel">Code postal : </string>
-    <string name="tvInseeCodeLabel">Code INSEE : </string>
-    <string name="tvRegionCodeLabel">Code région : </string>
-    <string name="tvLatitudeLabel">Latitude : </string>
-    <string name="tvLongitudeLabel">Longitude : </string>
-    <string name="tvRemotenessLabel">Éloignement : </string>
+
+    <!-- CityListActivity -->
     <string name="defaultCityName">Ville</string>
     <string name="citySearchBarHint">Ville</string>
     <string name="SearchButtonText">Rechercher</string>
+
+    <!-- CityDetailsActivity -->
+    <string name="postalCodeLabelTextView">Code postal : </string>
+    <string name="inseeCodeLabelTextView">Code INSEE : </string>
+    <string name="regionCodeLabelTextView">Code région : </string>
+    <string name="latitudeLabelTextView">Latitude : </string>
+    <string name="longitudeLabelTextView">Longitude : </string>
+    <string name="remotenessLabelTextView">Éloignement : </string>
+
+
 </resources>
