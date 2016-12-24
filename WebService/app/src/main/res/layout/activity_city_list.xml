@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btCitySearch"
                 android:layout_weight="1"
-                android:onClick="searchForCityListOnSearchButtonClick" />
+                android:onClick="searchCityList" />
         </LinearLayout>
 
         <ListView
