@@ -83,6 +83,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                     public void onResponse(JSONArray cityListJSONArrayResponse) {
                         loadCityDetailsFromJSONArray(cityListJSONArrayResponse);
                         loadCityDetails();
+                        displayCityEditFabIfLoadingDatasSuccessful();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -98,13 +99,11 @@ public class CityDetailsActivity extends AppCompatActivity {
     public void loadCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
         try {
             this.cityDetails = City.createFromJSONArray(cityListJSONArray);
-            this.cityEditfloatingActionButton.setVisibility(View.VISIBLE);
         }
 
         catch (JSONException exception) {
             exception.printStackTrace();
             ToastMessage.displayJSONReadError(getApplicationContext());
-            this.cityEditfloatingActionButton.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -119,6 +118,15 @@ public class CityDetailsActivity extends AppCompatActivity {
                 info = cityDetailsInfos.get(i);
                 this.cityDetailTextViews.get(i).setText(info);
             }
+        }
+    }
+
+    public void displayCityEditFabIfLoadingDatasSuccessful() {
+        if(null == this.cityDetails) {
+            this.cityEditfloatingActionButton.setVisibility(View.INVISIBLE);
+        }
+        else {
+            this.cityEditfloatingActionButton.setVisibility(View.VISIBLE);
         }
     }
 
