@@ -1,7 +1,10 @@
 package com.example.lp.webservice;
 
+import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -22,10 +25,10 @@ import java.util.Map;
 public class CityDetailsActivity extends AppCompatActivity {
 
     private TextView tvCityName;
+    private String cityName;
 
     private ArrayList<TextView> cityDetailTextViews;
 
-    private String cityName;
     private City cityDetails;
     private JSONObject cityDetailsJsonObjet;
 
@@ -46,8 +49,10 @@ public class CityDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public void displayGpsCoordinates() {
-
+    public void displayCityEditForm(View view) {
+        Intent toCityEditActivity = new Intent(CityDetailsActivity.this, CityEditActivity.class);
+        toCityEditActivity.putExtra("cityName", this.cityName);
+        startActivity(toCityEditActivity);
     }
 
     public String fetchCityNameFromExtras() {
