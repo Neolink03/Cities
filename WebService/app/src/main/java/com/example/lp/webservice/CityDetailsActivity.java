@@ -26,6 +26,7 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     private TextView tvCityName;
     private String cityName;
+    private FloatingActionButton cityEditfloatingActionButton;
 
     private ArrayList<TextView> cityDetailTextViews;
 
@@ -37,12 +38,12 @@ public class CityDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_details);
         tvCityName = (TextView) findViewById(R.id.tvCityName);
+        cityEditfloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditFloatingActionButton);
 
         if(NetworkChecker.isNetworkActivated(this)) {
             this.cityName = fetchCityNameFromExtras();
             displayCityNameTitle();
             displayCityDetails();
-            //update();
         }
         else {
             ToastMessage.noNetworkConnection(this);
@@ -97,11 +98,13 @@ public class CityDetailsActivity extends AppCompatActivity {
     public void loadCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
         try {
             this.cityDetails = City.createFromJSONArray(cityListJSONArray);
+            this.cityEditfloatingActionButton.setVisibility(View.VISIBLE);
         }
 
         catch (JSONException exception) {
             exception.printStackTrace();
             ToastMessage.displayJSONReadError(getApplicationContext());
+            this.cityEditfloatingActionButton.setVisibility(View.INVISIBLE);
         }
     }
 
