@@ -13,6 +13,7 @@
     <string name="latitudeLabelTextView">Latitude : </string>
     <string name="longitudeLabelTextView">Longitude : </string>
     <string name="remotenessLabelTextView">Éloignement : </string>
+    <string name="inhabitantNumberLabelTextView">Nombre d\'habitants :</string>
 
 
 </resources>

@@ -72,7 +72,7 @@ public class CityListActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            ToastMessage.displayUnexpectedResponse(getApplicationContext());
+                            ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
                         }
                     });
 

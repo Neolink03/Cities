@@ -29,7 +29,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:rowCount="6"
+        android:rowCount="7"
         android:columnCount="2">
 
         <!-- Postal code -->
@@ -104,5 +104,18 @@
             android:id="@+id/remotenessLabelTextView"
             android:textColor="#000"/>
 
+        <!-- Inhabitant number -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inhabitantNumberLabelTextView"
+            android:textColor="#000"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/inhabitantNumberTextView"
+            android:textColor="#000"/>
+
     </GridLayout>
+
 </LinearLayout>

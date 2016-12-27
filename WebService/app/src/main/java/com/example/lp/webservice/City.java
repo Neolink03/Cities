@@ -19,8 +19,9 @@ public class City {
     private double latitude;
     private double longitude;
     private double remoteness;
+    private int inhabitantNumber;
 
-    public City(String name, int postalCode, int inseeCode, String regionCode, double latitude, double longitude, double remoteness) {
+    public City(String name, int postalCode, int inseeCode, String regionCode, double latitude, double longitude, double remoteness, int inhabitantNumber) {
         this.name = name;
         this.postalCode = postalCode;
         this.inseeCode = inseeCode;
@@ -28,6 +29,7 @@ public class City {
         this.latitude = latitude;
         this.longitude = longitude;
         this.remoteness = remoteness;
+        this.inhabitantNumber = inhabitantNumber;
     }
 
     public static City createFromJSONArray(JSONArray JSONArrayFromResponse) throws JSONException {
@@ -41,7 +43,8 @@ public class City {
                 cityJSONObjet.getString("Code_Region"),
                 cityJSONObjet.getDouble("Latitude"),
                 cityJSONObjet.getDouble("Longitude"),
-                cityJSONObjet.getDouble("Eloignement")
+                cityJSONObjet.getDouble("Eloignement"),
+                cityJSONObjet.getInt("nbre_habitants")
         );
     }
 
@@ -53,6 +56,7 @@ public class City {
         cityCharacteristics.add( Double.toString(this.latitude) + "\n");
         cityCharacteristics.add( Double.toString(this.longitude) + "\n");
         cityCharacteristics.add( Double.toString(this.remoteness) + "\n");
+        cityCharacteristics.add( Integer.toString(this.inhabitantNumber)+ "\n");
         return cityCharacteristics;
     }
 

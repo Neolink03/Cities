@@ -10,8 +10,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
-import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -84,7 +82,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        ToastMessage.displayUnexpectedResponse(getApplicationContext());
+                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
                     }
                 });
 
@@ -104,9 +102,15 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void loadCityDetails() {
 
-        ArrayList<String> cityDetailsInfos = this.cityDetails.getCharacteristicsAsArray();
-        for (int i = 0; i < this.cityDetailTextViews.size() ; i++) {
-            this.cityDetailTextViews.get(i).setText(cityDetailsInfos.get(i));
+        if(null != this.cityDetails) {
+            ArrayList<String> cityDetailsInfos = this.cityDetails.getCharacteristicsAsArray();
+            String info;
+
+            String details;
+            for (int i = 0; i < this.cityDetailTextViews.size() ; i++) {
+                info = cityDetailsInfos.get(i);
+                this.cityDetailTextViews.get(i).setText(info);
+            }
         }
     }
 
@@ -118,6 +122,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         this.cityDetailTextViews.add( (TextView) findViewById(R.id.latitudeLabelTextView) );
         this.cityDetailTextViews.add( (TextView) findViewById(R.id.longitudeLabelTextView) );
         this.cityDetailTextViews.add( (TextView) findViewById(R.id.remotenessLabelTextView) );
+        this.cityDetailTextViews.add( (TextView) findViewById(R.id.inhabitantNumberTextView) );
     }
 
     public void update() {
@@ -136,7 +141,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        ToastMessage.displayUnexpectedResponse(getApplicationContext());
+                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
                     }
                 }) {
 

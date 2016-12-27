@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 public class ToastMessage {
 
-    public static void displayUnexpectedResponse(Context applicationContext) {
+    public static void displayUnexpectedServerResponse(Context applicationContext) {
         android.widget.Toast toast = android.widget.Toast.makeText(
                 applicationContext,
                 "Échec de récupération des données du serveur.",
@@ -20,7 +20,7 @@ public class ToastMessage {
     public static void displayJSONReadError(Context applicationContext) {
         android.widget.Toast toast = android.widget.Toast.makeText(
                 applicationContext,
-                "Erreur lors du chargement de la liste.",
+                "Erreur lors du chargement des données.",
                 Toast.LENGTH_SHORT);
         toast.show();
     };
