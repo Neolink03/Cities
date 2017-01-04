@@ -34,7 +34,8 @@ CREATE TABLE IF NOT EXISTS `villes` (
   `Code_Region` varchar(2) DEFAULT NULL,
   `Latitude` float DEFAULT NULL,
   `Longitude` float DEFAULT NULL,
-  `Eloignement` float DEFAULT NULL
+  `Eloignement` float DEFAULT NULL,
+  `nbre_habitants` int DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
