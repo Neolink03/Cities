@@ -38,6 +38,10 @@ public class CityListActivity extends AppCompatActivity {
         citySearchBar = (EditText) findViewById(R.id.citySearchBarTextField);
     }
 
+    public void createCity() {
+
+    }
+
     public void searchCityList(View searchButton) {
 
         String searchedCity = citySearchBar.getText().toString();
@@ -52,12 +56,7 @@ public class CityListActivity extends AppCompatActivity {
 
     public void displayListNameCityList(String city) {
 
-        // TODO : Add a rewrite rule for "localhost/villes/"
-        if(!city.isEmpty()) {
-            city = "/" + city;
-        }
-
-        String url = "http://10.0.2.1/villes" + city;
+        String url = "http://10.0.2.1/villes/" + city;
 
         if(NetworkChecker.isNetworkActivated(this)) {
 
