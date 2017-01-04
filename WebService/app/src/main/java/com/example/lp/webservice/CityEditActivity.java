@@ -1,15 +1,19 @@
 package com.example.lp.webservice;
 
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -19,14 +23,26 @@ public class CityEditActivity extends AppCompatActivity {
 
     private TextView tvCityName;
     private String cityName;
+    private FloatingActionButton cityEditSavefloatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_edit);
-        tvCityName = (TextView) findViewById(R.id.tvCityName);
-        this.cityName = fetchCityNameFromExtras();
-        displayCityNameTitle();
+        cityEditSavefloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditSaveFloatingActionButton);
+
+        if(NetworkChecker.isNetworkActivated(this)) {
+
+            tvCityName = (TextView) findViewById(R.id.tvCityName);
+            this.cityName = fetchCityNameFromExtras();
+            displayCityNameTitle();
+            this.cityEditSavefloatingActionButton.setVisibility(View.VISIBLE);
+        }
+        else {
+            ToastMessage.noNetworkConnection(this);
+        }
+
+
     }
 
     public String fetchCityNameFromExtras() {
