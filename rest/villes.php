@@ -71,14 +71,26 @@ function read_villes()
     if (isset($_GET['code_insee'])) {
         $code_insee = $_GET['code_insee'];
     } else {
-        $code_insee = '';
+        $code_insee = '%%';
+    }
+
+    if (isset($_GET['filtres']) && $_GET['filtres'] != "") {
+        $filtres = str_replace("/", "", $_GET['filtres']);
+        $filtres = explode("-", $filtres);
+        $filtres_parsed = '';
+        foreach ($filtres as $key => $value) {
+            $filtres_parsed = $filtres_parsed . $value . ', ';
+        }
+        $filtres_parsed = substr($filtres_parsed, 0, -2);
+    } else {
+        $filtres_parsed = '*';
     }
 
     /**
      * Requète SQL
      */
 
-    $sql = "SELECT * FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\" LIMIT 10";
+    $sql = "SELECT $filtres_parsed FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\" LIMIT 10";   
     if ($stmt = $pdo->query($sql)) {
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
