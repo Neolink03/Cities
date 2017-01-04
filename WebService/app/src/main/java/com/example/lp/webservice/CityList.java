@@ -10,16 +10,34 @@ import java.util.ArrayList;
  * Created by Neolink03 on 02/12/2016.
  */
 
-class CityList {
+public class CityList {
 
-    static ArrayList<String> createCityNameListFromJsonArray(JSONArray cityListJsonArray) throws JSONException{
+    ArrayList<String> nameCityList;
+    ArrayList<Integer> inseeCodeList;
 
-        ArrayList<String> cityNameList = new ArrayList<String>();
+    public static CityList createCityListFromJsonArray(JSONArray cityListJsonArray) throws JSONException{
+
+        CityList cityList = new CityList();
+        cityList.nameCityList = new ArrayList<>();
+        cityList.inseeCodeList = new ArrayList<>();
 
         for(int i = 0 ; i < cityListJsonArray.length() ; i++ ) {
-            cityNameList.add(cityListJsonArray.getJSONObject(i).getString("Nom_Ville"));
+            cityList.nameCityList.add(cityListJsonArray.getJSONObject(i).getString("Nom_Ville"));
+            cityList.inseeCodeList.add(cityListJsonArray.getJSONObject(i).getInt("Code_INSEE"));
         }
 
-        return new ArrayList<String>(cityNameList);
+        return cityList;
+    }
+
+    public int getInseeCodeAtPosition(int position) {
+        return inseeCodeList.get(position);
+    }
+
+    public ArrayList<String> getNameCityList() {
+        return nameCityList;
+    }
+
+    public boolean isEmpty() {
+        return (inseeCodeList.isEmpty());
     }
 }

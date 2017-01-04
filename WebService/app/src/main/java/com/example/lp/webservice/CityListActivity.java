@@ -27,7 +27,7 @@ public class CityListActivity extends AppCompatActivity {
 
     private ListView cityList;
     private EditText citySearchBar;
-    private ArrayList<String> cityNameList;
+    private CityList cityNameList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,6 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     public void searchCityList(View searchButton) {
-
         String searchedCity = citySearchBar.getText().toString();
 
         if(!searchedCity.isEmpty()) {
@@ -87,7 +86,7 @@ public class CityListActivity extends AppCompatActivity {
     public void loadCityListFromJsonArray(JSONArray cityJSONArray) {
 
         try {
-            this.cityNameList = CityList.createCityNameListFromJsonArray(cityJSONArray);
+            this.cityNameList = CityList.createCityListFromJsonArray(cityJSONArray);
         }
         catch (JSONException e) {
             e.printStackTrace();
@@ -100,10 +99,11 @@ public class CityListActivity extends AppCompatActivity {
      */
     public void loadListView() {
 
+        // Converting list of cities to inputs of the ListView
         if (!this.cityNameList.isEmpty()) {
             // Converting list of cities to inputs of the ListView
             final ArrayAdapter adapter = new StableArrayAdapter(this,
-                    android.R.layout.simple_list_item_1, this.cityNameList);
+                    android.R.layout.simple_list_item_1, this.cityNameList.getNameCityList());
             cityList.setAdapter(adapter);
             setCityListViewListener();
         }
@@ -113,6 +113,7 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     public void setCityListViewListener() {
+        final CityListActivity self = this;
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -121,14 +122,12 @@ public class CityListActivity extends AppCompatActivity {
 
                 // Get position of the clicked city and display its details
                 final String city = (String) parent.getItemAtPosition(position);
-                displayCityDetails(city);
-
+                displayCityDetails(self.cityNameList.getInseeCodeAtPosition(position));
             }
 
-            private void displayCityDetails(String item) {
+            private void displayCityDetails(int inseeCode) {
                 Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailsActivity.class);
-                cityDetailIntent.putExtra("cityName", item);
-                startActivity(cityDetailIntent);
+                cityDetailIntent.putExtra("inseeCode", inseeCode);
             }
 
         });
