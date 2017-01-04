@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `villes` (
   `Nom_Ville` varchar(42) DEFAULT NULL,
   `MAJ` varchar(31) DEFAULT NULL,
   `Code_Postal` int(11) DEFAULT NULL,
-  `Code_INSEE` int(11) DEFAULT NULL,
+  `Code_INSEE` int(11) PRIMARY KEY,
   `Code_Region` varchar(2) DEFAULT NULL,
   `Latitude` float DEFAULT NULL,
   `Longitude` float DEFAULT NULL,

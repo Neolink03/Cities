@@ -99,24 +99,22 @@ function delete_ville()
 {
     global $pdo, $cols, $sql;
 
-    if (isset($_GET['code_insee'])) {
-        $code_insee = $_GET['code_insee'];
+    $code_insee = $_GET['code_insee'];
 
-        /**
-         * Requète SQL
-         */
+    /**
+    * Requète SQL
+    */
 
-        $sql = "DELETE FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\"";
-        $stmt = $pdo->query($sql);
+    $sql = "DELETE FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\"";
+    $stmt = $pdo->query($sql);
 
-        /**
-         * Affichage terminal : présentation en JSON
-         */
+    /**
+    * Affichage terminal : présentation en JSON
+    */
 
-        header('Content-Type: application/json');
-        echo json_encode($pdo->errorInfo());
+    header('Content-Type: application/json');
+    echo json_encode($pdo->errorInfo());
 
-    }
 }
 
 /**
@@ -125,10 +123,6 @@ function delete_ville()
 function create_ville()
 {
     global $pdo, $cols, $sql;
-
-    /**
-     * Requète SQL
-     */
 
     $content = trim(file_get_contents("php://input"));
     $decoded = json_decode($content, true);
@@ -143,6 +137,10 @@ function create_ville()
 
     $keys = substr($keys, 0, -2);
     $values = substr($values, 0, -2);
+
+    /**
+     * Requète SQL
+     */
 
     $sql = "INSERT INTO `villes` ($keys) VALUES ($values)";
     $stmt = $pdo->query($sql);
@@ -163,9 +161,7 @@ function update_ville()
 {
     global $pdo, $cols, $sql;
 
-    /**
-     * Requète SQL
-     */
+    $code_insee = $_GET['code_insee'];
 
     $content = trim(file_get_contents("php://input"));
     $decoded = json_decode($content, true);
@@ -173,18 +169,16 @@ function update_ville()
     $update_set = '';
 
     foreach ($decoded as $key => $value) {
-        $update_set = $update_set . $key . ' = ';
+        $update_set = $update_set . $key . ' = "'. $value .'", ';
     }
 
-    $update_set = substr($keys, 0, -2);
+    $update_set = substr($update_set, 0, -2);
 
-    print_r($update_set."\n");
-
-    $sql = "UPDATE table
-            SET colonne_1 = 'valeur 1', 
-                colonne_2 = 'valeur 2', 
-                colonne_3 = 'valeur 3'
-            WHERE condition";
+    /**
+     * Requète SQL
+     */
+    
+    $sql = "UPDATE `villes` SET $update_set WHERE Code_INSEE = $code_insee";
     $stmt = $pdo->query($sql);
 
     /**
