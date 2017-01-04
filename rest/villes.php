@@ -12,11 +12,11 @@ require_once('./db_infos.php');
 
 try {
 	$pdo = new PDO(
-		'mysql:host='.$host
-		.';port='.$port
-		.';dbname='.$dbname
-		,$user
-		,$pwd);
+        'mysql:host='.$host
+        .';port='.$port
+        .';dbname='.$dbname
+        ,$user
+        ,$pwd);
 } catch (PDOException $e) {
     die("Erreur : " . $e->getMessage());
 }
@@ -68,17 +68,17 @@ function read_villes()
 {
     global $pdo, $cols, $sql;
 
-    if (isset($_GET['ville'])) {
-        $ville = $_GET['ville'];
+    if (isset($_GET['code_insee'])) {
+        $code_insee = $_GET['code_insee'];
     } else {
-        $ville = '';
+        $code_insee = '';
     }
 
     /**
      * Requète SQL
      */
 
-    $sql = "SELECT * FROM `villes` WHERE Nom_Ville LIKE \"%$ville%\" LIMIT 10";
+    $sql = "SELECT * FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\" LIMIT 10";
     if ($stmt = $pdo->query($sql)) {
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -99,14 +99,14 @@ function delete_ville()
 {
     global $pdo, $cols, $sql;
 
-    if (isset($_GET['ville'])) {
-        $ville = $_GET['ville'];
+    if (isset($_GET['code_insee'])) {
+        $code_insee = $_GET['code_insee'];
 
         /**
          * Requète SQL
          */
 
-        $sql = "DELETE FROM `villes` WHERE Nom_Ville LIKE \"%$ville%\"";
+        $sql = "DELETE FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\"";
         $stmt = $pdo->query($sql);
 
         /**

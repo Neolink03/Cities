@@ -4,4 +4,4 @@ RewriteEngine On
 RewriteBase /htdocs/WebServices_android/rest/
 
 RewriteRule ^villes(\/?)$ villes.php [L]
-RewriteRule ^villes\/([\w-]+)$ villes.php?ville=$1 [L]
+RewriteRule ^villes\/([\w-]+)$ villes.php?code_insee=$1 [L]
