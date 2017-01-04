@@ -41,8 +41,8 @@ public class CityDetailsActivity extends AppCompatActivity {
         cityEditfloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditFloatingActionButton);
 
         if(NetworkChecker.isNetworkActivated(this)) {
-            this.cityName = fetchCityNameFromExtras();
-            displayCityNameTitle();
+            //this.cityName = fetchCityNameFromExtras();
+            //displayCityNameTitle();
             displayCityDetails();
         }
         else {
@@ -71,8 +71,9 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void displayCityDetails() {
 
+        String codeInsee = getIntent().getStringExtra("codeInsee");
         String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + cityName;
+        String url = ipServer + "/villes/" + codeInsee;
 
         loadCityDetailsTextViews();
 

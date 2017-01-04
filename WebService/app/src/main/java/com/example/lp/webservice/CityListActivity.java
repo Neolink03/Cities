@@ -128,6 +128,7 @@ public class CityListActivity extends AppCompatActivity {
             private void displayCityDetails(int inseeCode) {
                 Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailsActivity.class);
                 cityDetailIntent.putExtra("inseeCode", inseeCode);
+                startActivity(cityDetailIntent);
             }
 
         });
