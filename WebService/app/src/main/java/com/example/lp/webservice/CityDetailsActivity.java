@@ -71,9 +71,9 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void displayCityDetails() {
 
-        String codeInsee = getIntent().getStringExtra("codeInsee");
+        String inseeCode = getIntent().getStringExtra("inseeCode");
         String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + codeInsee;
+        String url = ipServer + "/villes/" + inseeCode;
 
         loadCityDetailsTextViews();
 
