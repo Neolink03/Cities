@@ -40,4 +40,24 @@ public class ToastMessage {
                 Toast.LENGTH_SHORT);
         toast.show();
     };
+
+    public static void citySucessfullyDeleted(String cityName, Context applicationContext) {
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                    applicationContext,
+                    "La ville " + cityName + " a bien été supprimée",
+                    Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
+
+    public static void cityUnSucessfullyDeleted(String cityName, Context applicationContext) {
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                    applicationContext,
+                    "La ville " + cityName + " n'a pas pu être supprimée",
+                    Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
 }

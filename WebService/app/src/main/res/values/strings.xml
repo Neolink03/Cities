@@ -14,8 +14,8 @@
     <string name="longitudeLabelTextView">Longitude : </string>
     <string name="remotenessLabelTextView">Éloignement : </string>
     <string name="inhabitantNumberLabelTextView">Nombre d\'habitants :</string>
-    <string name="editCityActionMenu">Modifier</string>
-    <string name="deleteCityActionMenu">Supprimer</string>
+    <string name="editCityDetailsMenu">Modifier</string>
+    <string name="deleteCityDetailsMenu">Supprimer</string>
 
 
 </resources>

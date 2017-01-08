@@ -38,6 +38,12 @@ public class CityListActivity extends AppCompatActivity {
         citySearchBar = (EditText) findViewById(R.id.citySearchBarTextField);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchCityList(null);
+    }
+
     public void createCity() {
 
     }

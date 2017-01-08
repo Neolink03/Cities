@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -51,8 +52,23 @@ public class CityDetailsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.city_details_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.editCityDetailsMenu:
+                displayCityEditForm(null);
+                return true;
+            case R.id.deleteCityDetailsMenu:
+                deleteCity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void deleteCity() {
@@ -60,18 +76,20 @@ public class CityDetailsActivity extends AppCompatActivity {
         String ipServer = "http://10.0.2.1";
         String url = ipServer + "/villes/" + this.cityDetails.getInseeCode();
 
+        final CityDetailsActivity self = this;
         JsonArrayRequest deleteRequest = new JsonArrayRequest
                 (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray cityListJSONArrayResponse) {
-                    System.out.println("ok");
+                        ToastMessage.citySucessfullyDeleted(self.cityDetails.getName(), self);
+                        finish();
 
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                    ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                        error.printStackTrace();
+                        ToastMessage.cityUnSucessfullyDeleted(self.cityDetails.getName(), self);
                     }
                 });
 
