@@ -7,20 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CityDetailsActivity extends AppCompatActivity {
 
@@ -48,6 +44,29 @@ public class CityDetailsActivity extends AppCompatActivity {
         else {
             ToastMessage.noNetworkConnection(this);
         }
+    }
+
+    public void deleteCity() {
+
+        String ipServer = "http://10.0.2.1";
+        String url = ipServer + "/villes/" + this.cityDetails.getInseeCode();
+
+        JsonArrayRequest deleteRequest = new JsonArrayRequest
+                (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray cityListJSONArrayResponse) {
+                    System.out.println("ok");
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                    }
+                });
+
+        RequestQueue.getInstance(this).addToRequestQueue(deleteRequest);
     }
 
     public void displayCityEditForm(View view) {
