@@ -21,6 +21,8 @@ public class City {
     private double remoteness;
     private int inhabitantNumber;
 
+    private static final int INVALID_VALUE = -999999;
+
     public City(String name, int postalCode, int inseeCode, String regionCode, double latitude, double longitude, double remoteness, int inhabitantNumber) {
         this.name = name;
         this.postalCode = postalCode;
@@ -37,26 +39,26 @@ public class City {
         JSONObject cityJSONObjet = JSONArrayFromResponse.getJSONObject(0);
 
         return new City(
-                cityJSONObjet.getString("Nom_Ville"),
-                cityJSONObjet.getInt("Code_Postal"),
-                cityJSONObjet.getInt("Code_INSEE"),
-                cityJSONObjet.getString("Code_Region"),
-                cityJSONObjet.getDouble("Latitude"),
-                cityJSONObjet.getDouble("Longitude"),
-                cityJSONObjet.getDouble("Eloignement"),
-                cityJSONObjet.getInt("nbre_habitants")
+            ( ! cityJSONObjet.isNull("Nom_Ville") ) ? cityJSONObjet.getString("Nom_Ville") : "",
+            ( ! cityJSONObjet.isNull("Code_Postal") ) ? cityJSONObjet.getInt("Code_Postal") : INVALID_VALUE,
+            ( ! cityJSONObjet.isNull("Code_INSEE") ) ? cityJSONObjet.getInt("Code_INSEE") : INVALID_VALUE ,
+            ( ! cityJSONObjet.isNull("Code_Region") ) ? cityJSONObjet.getString("Code_Region") : "",
+            ( ! cityJSONObjet.isNull("Latitude") ) ? cityJSONObjet.getDouble("Latitude") : INVALID_VALUE,
+            ( ! cityJSONObjet.isNull("Longitude") ) ? cityJSONObjet.getDouble("Longitude") : INVALID_VALUE,
+            ( ! cityJSONObjet.isNull("Eloignement") ) ? cityJSONObjet.getDouble("Eloignement") : INVALID_VALUE,
+            ( ! cityJSONObjet.isNull("nbre_habitants") ) ? cityJSONObjet.getInt("nbre_habitants") : INVALID_VALUE
         );
     }
 
     public ArrayList<String> getCharacteristicsAsArray() {
         ArrayList<String> cityCharacteristics = new ArrayList<String>();
-        cityCharacteristics.add( Integer.toString(this.postalCode) + "\n" );
-        cityCharacteristics.add( Integer.toString(this.inseeCode)+ "\n");
+        cityCharacteristics.add( ( (this.postalCode != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") + "\n" );
         cityCharacteristics.add( this.regionCode + "\n");
-        cityCharacteristics.add( Double.toString(this.latitude) + "\n");
-        cityCharacteristics.add( Double.toString(this.longitude) + "\n");
-        cityCharacteristics.add( Double.toString(this.remoteness) + "\n");
-        cityCharacteristics.add( Integer.toString(this.inhabitantNumber)+ "\n");
+        cityCharacteristics.add( ( (this.inseeCode != INVALID_VALUE) ? Integer.toString(this.inseeCode) : "") + "\n");
+        cityCharacteristics.add( ( (this.latitude != INVALID_VALUE) ? Double.toString(this.latitude) : "") + "\n" );
+        cityCharacteristics.add( ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") + "\n" );
+        cityCharacteristics.add( ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") + "\n" );
+        cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") + "\n");
         return cityCharacteristics;
     }
 
