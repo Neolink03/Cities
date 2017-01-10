@@ -66,27 +66,7 @@ public class City {
         return name;
     }
 
-    public int getPostalCode() {
-        return postalCode;
-    }
-
     public int getInseeCode() {
         return inseeCode;
-    }
-
-    public String getRegionCode() {
-        return regionCode;
-    }
-
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public double getRemoteness() {
-        return remoteness;
     }
 }
