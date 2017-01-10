@@ -58,7 +58,7 @@ public class City {
         cityCharacteristics.add( ( (this.latitude != INVALID_VALUE) ? Double.toString(this.latitude) : "") + "\n" );
         cityCharacteristics.add( ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") + "\n" );
         cityCharacteristics.add( ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") + "\n" );
-        cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") + "\n");
+        cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.inhabitantNumber) : "") + "\n");
         return cityCharacteristics;
     }
 
