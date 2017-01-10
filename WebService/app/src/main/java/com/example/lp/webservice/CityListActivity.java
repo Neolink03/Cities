@@ -11,17 +11,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class CityListActivity extends AppCompatActivity {
 
@@ -36,6 +41,7 @@ public class CityListActivity extends AppCompatActivity {
 
         cityList = (ListView) findViewById(R.id.cityListListView);
         citySearchBar = (EditText) findViewById(R.id.citySearchBarTextField);
+        createCity(null);
     }
 
     @Override
@@ -44,8 +50,48 @@ public class CityListActivity extends AppCompatActivity {
         searchCityList(null);
     }
 
-    public void createCity() {
+    public void createCity(View createCityButton) {
 
+        String inseeCode = "7000";
+        String url = "http://10.0.2.1/villes/" + inseeCode;
+
+        StringRequest request = new StringRequest
+                (Request.Method.POST, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String cityListJSONArrayResponse) {
+                        System.out.println("city created");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+
+                params.put("Code_INSEE", "7000");
+                params.put("nbr_habitants", "42");
+
+                return params;
+            }
+
+            /**
+             * Passing some request headers
+             * */
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+        };
+
+        RequestQueue.getInstance(this).addToRequestQueue(request);
     }
 
     public void searchCityList(View searchButton) {
@@ -85,8 +131,6 @@ public class CityListActivity extends AppCompatActivity {
         else {
             ToastMessage.noNetworkConnection(this);
         }
-
-
     }
 
     public void loadCityListFromJsonArray(JSONArray cityJSONArray) {
