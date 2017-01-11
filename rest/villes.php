@@ -68,29 +68,36 @@ function read_villes()
 {
     global $pdo, $cols, $sql;
 
+    $code_insee = '%%';
     if (isset($_GET['code_insee'])) {
         $code_insee = $_GET['code_insee'];
-    } else {
-        $code_insee = '%%';
     }
 
+    $search = '%%';
+    if (isset($_GET['search'])) {
+        $search = "%".$_GET['search']."%";
+    }
+
+    $filtres_parsed = '*';
     if (isset($_GET['filtres']) && $_GET['filtres'] != "") {
         $filtres = str_replace("/", "", $_GET['filtres']);
         $filtres = explode("-", $filtres);
         $filtres_parsed = '';
         foreach ($filtres as $key => $value) {
-            $filtres_parsed = $filtres_parsed . $value . ', ';
+            $filtres_parsed .= $value . ', ';
         }
         $filtres_parsed = substr($filtres_parsed, 0, -2);
-    } else {
-        $filtres_parsed = '*';
     }
 
     /**
      * Requète SQL
      */
 
-    $sql = "SELECT $filtres_parsed FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\" LIMIT 10";   
+    $sql = "SELECT $filtres_parsed FROM `villes`
+    WHERE Code_INSEE LIKE \"$code_insee\"
+    AND (Nom_Ville LIKE \"$search\" OR Nom_Ville IS NULL)
+    LIMIT 10";
+
     if ($stmt = $pdo->query($sql)) {
         $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -117,7 +124,9 @@ function delete_ville()
     * Requète SQL
     */
 
-    $sql = "DELETE FROM `villes` WHERE Code_INSEE LIKE \"$code_insee\"";
+    $sql = "DELETE FROM `villes`
+    WHERE Code_INSEE LIKE \"$code_insee\"";
+
     $stmt = $pdo->query($sql);
 
     /**
@@ -137,14 +146,14 @@ function create_ville()
     global $pdo, $cols, $sql;
 
     $content = trim(file_get_contents("php://input"));
-    $decoded = json_decode($content, true);
+    $decoded = json_decode($content, true)[0];
 
     $keys = '';
     $values = '';
 
     foreach ($decoded as $key => $value) {
         $keys = $keys . $key . ', ';
-        $values = $values . '"' . $value . '", ';
+        $values .= '"' . $value . '", ';
     }
 
     $keys = substr($keys, 0, -2);
@@ -176,7 +185,7 @@ function update_ville()
     $code_insee = $_GET['code_insee'];
 
     $content = trim(file_get_contents("php://input"));
-    $decoded = json_decode($content, true);
+    $decoded = json_decode($content, true)[0];
 
     $update_set = '';
 
@@ -190,7 +199,9 @@ function update_ville()
      * Requète SQL
      */
     
-    $sql = "UPDATE `villes` SET $update_set WHERE Code_INSEE = $code_insee";
+    $sql = "UPDATE `villes` SET $update_set
+    WHERE Code_INSEE = $code_insee";
+
     $stmt = $pdo->query($sql);
 
     /**
