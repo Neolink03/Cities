@@ -15,9 +15,11 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,47 +53,53 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     public void createCity(View createCityButton) {
+        String url = "http://10.0.2.1/villes/";
 
-        String inseeCode = "7000";
-        String url = "http://10.0.2.1/villes/" + inseeCode;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put(City.NAME_DB_COL, "8002");
+        params.put(City.POSTAL_CODE_DB_COL, "01000");
+        params.put(City.INSEE_CODE_DB_COL, "8003");
+        params.put(City.REGION_CODE_DB_COL, "5A");
+        params.put(City.LATITUDE_DB_COL, "5");
+        params.put(City.LONGITUDE_DB_COL, "6.5");
+        params.put(City.REMOTENESS_DB_COL, "0.9");
+        params.put(City.INHABITANT_NUMBER_DB_COL, "42");
 
-        StringRequest request = new StringRequest
-                (Request.Method.POST, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String cityListJSONArrayResponse) {
-                        System.out.println("city created");
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
-                    }
-                }) {
+        System.out.println(new JSONObject(params).toString());
+        try {
+            JSONArray jsonArrayBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
+            System.out.println(jsonArrayBody.toString());
 
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-
-                params.put("Code_INSEE", "7000");
-                params.put("nbr_habitants", "42");
-
-                return params;
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, jsonArrayBody,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
+                                VolleyLog.v("Response:%n %s", response.toString(4));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                }
             }
 
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
 
-        };
-
-        RequestQueue.getInstance(this).addToRequestQueue(request);
+            RequestQueue.getInstance(this).addToRequestQueue(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void searchCityList(View searchButton) {
