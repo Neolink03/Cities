@@ -26,8 +26,9 @@ SET time_zone = "+00:00";
 -- Structure de la table `villes`
 --
 
+DROP TABLE IF EXISTS `villes`;
 CREATE TABLE IF NOT EXISTS `villes` (
-  `Nom_Ville` varchar(42) DEFAULT NULL,
+  `Nom_Ville` varchar(42) NOT NULL,
   `MAJ` varchar(31) DEFAULT NULL,
   `Code_Postal` int(11) DEFAULT NULL,
   `Code_INSEE` int(11) PRIMARY KEY,

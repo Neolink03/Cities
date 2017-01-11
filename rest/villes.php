@@ -95,7 +95,7 @@ function read_villes()
 
     $sql = "SELECT $filtres_parsed FROM `villes`
     WHERE Code_INSEE LIKE \"$code_insee\"
-    AND (Nom_Ville LIKE \"$search\" OR Nom_Ville IS NULL)
+    AND Nom_Ville LIKE \"$search\"
     LIMIT 10";
 
     if ($stmt = $pdo->query($sql)) {
