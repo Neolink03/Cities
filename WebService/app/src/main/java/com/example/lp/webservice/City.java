@@ -21,6 +21,15 @@ public class City {
     private double remoteness;
     private int inhabitantNumber;
 
+    public static final String NAME_DB_COL = "Nom_Ville";
+    public static final String POSTAL_CODE_DB_COL = "Code_Postal";
+    public static final String INSEE_CODE_DB_COL = "Code_INSEE";
+    public static final String REGION_CODE_DB_COL = "Code_Region";
+    public static final String LATITUDE_DB_COL = "Latitude";
+    public static final String LONGITUDE_DB_COL = "Longitude";
+    public static final String REMOTENESS_DB_COL = "Eloignement";
+    public static final String INHABITANT_NUMBER_DB_COL = "nbre_habitants";
+
     private static final int INVALID_VALUE = -999999;
 
     public City(String name, int postalCode, int inseeCode, String regionCode, double latitude, double longitude, double remoteness, int inhabitantNumber) {
