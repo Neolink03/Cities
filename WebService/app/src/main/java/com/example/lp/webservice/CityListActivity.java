@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -61,13 +62,31 @@ public class CityListActivity extends AppCompatActivity {
         searchCityList(null);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.create_city_list_menu:
+                displayCityEditForm();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void displayCityEditForm() {
+        Intent toCityEditActivity = new Intent(CityListActivity.this, CityEditActivity.class);
+        toCityEditActivity.putExtra("cityName", "");
+        startActivity(toCityEditActivity);
+    }
+
     public void createCity(View createCityButton) {
         String url = "http://10.0.2.1/villes/";
 
         Map<String, String> params = new HashMap<String, String>();
-        params.put(City.NAME_DB_COL, "8002");
+        params.put(City.NAME_DB_COL, "");
         params.put(City.POSTAL_CODE_DB_COL, "01000");
-        params.put(City.INSEE_CODE_DB_COL, "8003");
+        params.put(City.INSEE_CODE_DB_COL, "7010");
         params.put(City.REGION_CODE_DB_COL, "5A");
         params.put(City.LATITUDE_DB_COL, "5");
         params.put(City.LONGITUDE_DB_COL, "6.5");
@@ -124,7 +143,7 @@ public class CityListActivity extends AppCompatActivity {
 
     public void displayListNameCityList(String city) {
 
-        String url = "http://10.0.2.1/villes/" + city;
+        String url = "http://10.0.2.1/villes/search/" + city;
 
         if(NetworkChecker.isNetworkActivated(this)) {
 
