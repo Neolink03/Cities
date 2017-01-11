@@ -190,7 +190,7 @@ function update_ville()
     $update_set = '';
 
     foreach ($decoded as $key => $value) {
-        $update_set = $update_set . $key . ' = "'. $value .'", ';
+        $update_set .= $key . ' = "'. $value .'", ';
     }
 
     $update_set = substr($update_set, 0, -2);
