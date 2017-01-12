@@ -37,6 +37,14 @@ $method = $_SERVER['REQUEST_METHOD'];
 switch ($method) {
 
     case 'GET' : {
+        if (isset($_GET['code_insee'])) {
+            read_villes_by_id();
+            break;
+        }
+        if (isset($_GET['search'])) {
+            read_villes_with_search();
+            break;
+        }
         read_villes();
     }
         break;
@@ -68,15 +76,29 @@ function read_villes()
 {
     global $pdo, $cols, $sql;
 
-    $code_insee = '%%';
-    if (isset($_GET['code_insee'])) {
-        $code_insee = $_GET['code_insee'];
+    /**
+     * Requète SQL
+     */
+
+    $sql = "SELECT * FROM `villes` LIMIT 10";
+
+    if ($stmt = $pdo->query($sql)) {
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    $search = '%%';
-    if (isset($_GET['search'])) {
-        $search = "%".$_GET['search']."%";
-    }
+    /**
+     * Affichage terminal : présentation en JSON
+     */
+
+    header('Content-Type: application/json');
+    echo json_encode($items);
+}
+
+function read_villes_by_id()
+{
+    global $pdo, $cols, $sql;
+
+    $code_insee = $_GET['code_insee'];
 
     $filtres_parsed = '*';
     if (isset($_GET['filtres']) && $_GET['filtres'] != "") {
@@ -93,9 +115,40 @@ function read_villes()
      * Requète SQL
      */
 
-    $sql = "SELECT $filtres_parsed FROM `villes`
-    WHERE Code_INSEE LIKE \"$code_insee\"
-    AND Nom_Ville LIKE \"$search\"
+    $sql = "SELECT $filtres_parsed FROM `villes` WHERE Code_INSEE = $code_insee";
+
+    if ($stmt = $pdo->query($sql)) {
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Affichage terminal : présentation en JSON
+     */
+
+    header('Content-Type: application/json');
+    echo json_encode($items);
+}
+
+function read_villes_with_search()
+{
+    global $pdo, $cols, $sql;
+
+    $search = "%".$_GET['search']."%";
+
+    /**
+     * Requète SQL
+     */
+
+    $sql = "SELECT * FROM `villes`
+    WHERE Code_INSEE LIKE \"$search\"
+    OR Nom_Ville LIKE \"$search\"
+    OR MAJ LIKE \"$search\"
+    OR Code_Postal LIKE \"$search\"
+    OR Code_Region LIKE \"$search\"
+    OR Latitude LIKE \"$search\"
+    OR Longitude LIKE \"$search\"
+    OR Eloignement LIKE \"$search\"
+    OR nbre_habitants LIKE \"$search\"
     LIMIT 10";
 
     if ($stmt = $pdo->query($sql)) {
@@ -108,7 +161,6 @@ function read_villes()
 
     header('Content-Type: application/json');
     echo json_encode($items);
-
 }
 
 /**
