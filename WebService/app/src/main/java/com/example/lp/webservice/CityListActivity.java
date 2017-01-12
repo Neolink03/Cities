@@ -46,7 +46,6 @@ public class CityListActivity extends AppCompatActivity {
 
         cityList = (ListView) findViewById(R.id.cityListListView);
         citySearchBar = (EditText) findViewById(R.id.citySearchBarTextField);
-        createCity(null);
     }
 
     @Override
@@ -78,56 +77,6 @@ public class CityListActivity extends AppCompatActivity {
         Intent toCityEditActivity = new Intent(CityListActivity.this, CityEditActivity.class);
         toCityEditActivity.putExtra("cityName", "");
         startActivity(toCityEditActivity);
-    }
-
-    public void createCity(View createCityButton) {
-        String url = "http://10.0.2.1/villes/";
-
-        Map<String, String> params = new HashMap<String, String>();
-        params.put(City.NAME_DB_COL, "");
-        params.put(City.POSTAL_CODE_DB_COL, "01000");
-        params.put(City.INSEE_CODE_DB_COL, "7010");
-        params.put(City.REGION_CODE_DB_COL, "5A");
-        params.put(City.LATITUDE_DB_COL, "5");
-        params.put(City.LONGITUDE_DB_COL, "6.5");
-        params.put(City.REMOTENESS_DB_COL, "0.9");
-        params.put(City.INHABITANT_NUMBER_DB_COL, "42");
-
-        System.out.println(new JSONObject(params).toString());
-        try {
-            JSONArray jsonArrayBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
-            System.out.println(jsonArrayBody.toString());
-
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, jsonArrayBody,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            try {
-                                VolleyLog.v("Response:%n %s", response.toString(4));
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.e("Error: ", error.getMessage());
-                }
-            }
-
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
-            };
-
-            RequestQueue.getInstance(this).addToRequestQueue(request);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     public void searchCityList(View searchButton) {

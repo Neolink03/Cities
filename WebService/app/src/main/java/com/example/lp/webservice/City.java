@@ -34,8 +34,8 @@ public class City {
 
     public City(String name, int postalCode, int inseeCode, String regionCode, double latitude, double longitude, double remoteness, int inhabitantNumber) {
         this.name = name;
-        this.postalCode = postalCode;
         this.inseeCode = inseeCode;
+        this.postalCode = postalCode;
         this.regionCode = regionCode;
         this.latitude = latitude;
         this.longitude = longitude;

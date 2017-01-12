@@ -27,14 +27,6 @@
             android:textStyle="normal|bold"
             android:textColor="#000"/>
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ScrollView>
-
-
-
         <!-- Name -->
         <TextView
             android:layout_width="wrap_content"
@@ -48,6 +40,21 @@
             android:id="@+id/nameEditText"
             android:textColor="#000"
             />
+
+        <!-- INSEE code -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inseeCodeLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/inseeCodeEditText"
+            android:textColor="#000" />
 
         <!-- Postal code -->
         <TextView
@@ -76,21 +83,6 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/regionCodeEditText"
-            android:textColor="#000" />
-
-        <!-- INSEE code -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inseeCodeLabelTextView"
-            android:textColor="#000"/>
-
-        <EditText
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/inseeCodeEditText"
             android:textColor="#000" />
 
         <!-- Latitude -->
@@ -162,7 +154,7 @@
             app:srcCompat="@android:drawable/ic_menu_save"
             android:id="@+id/cityEditSaveFloatingActionButton"
             app:backgroundTint="@android:color/holo_green_dark"
-            android:onClick="displayCityEditForm"
+            android:onClick="createCity"
             android:visibility="invisible" />
 
     </LinearLayout>

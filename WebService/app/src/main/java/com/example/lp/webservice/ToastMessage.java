@@ -44,9 +44,9 @@ public class ToastMessage {
     public static void citySucessfullyDeleted(String cityName, Context applicationContext) {
 
         android.widget.Toast toast = android.widget.Toast.makeText(
-                    applicationContext,
-                    "La ville " + cityName + " a bien été supprimée",
-                    Toast.LENGTH_SHORT);
+                applicationContext,
+                "La ville " + cityName + " a bien été supprimée",
+                Toast.LENGTH_SHORT);
 
         toast.show();
     };
@@ -54,9 +54,29 @@ public class ToastMessage {
     public static void cityUnSucessfullyDeleted(String cityName, Context applicationContext) {
 
         android.widget.Toast toast = android.widget.Toast.makeText(
-                    applicationContext,
-                    "La ville " + cityName + " n'a pas pu être supprimée",
-                    Toast.LENGTH_SHORT);
+                applicationContext,
+                "La ville " + cityName + " n'a pas pu être supprimée",
+                Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
+
+    public static void citySucessfullyCreated(String cityName, Context applicationContext) {
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                applicationContext,
+                "La ville " + cityName + " a bien été crée",
+                Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
+
+    public static void cityUnSucessfullyCreated(String cityName, Context applicationContext) {
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                applicationContext,
+                "La ville " + cityName + " n'a pas pu être crée",
+                Toast.LENGTH_SHORT);
 
         toast.show();
     };
