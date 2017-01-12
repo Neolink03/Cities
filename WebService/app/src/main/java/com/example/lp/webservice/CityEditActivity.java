@@ -182,16 +182,30 @@ public class CityEditActivity extends AppCompatActivity {
                         public void onResponse(JSONArray response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                finish();
-                                ToastMessage.citySucessfullyCreated(self.nameEditText.getText().toString(), self);
-                            } catch (JSONException e) {
+                                restApiResponse result = restApiResponse.createFromJsonArray(response);
+                                System.out.println(result);
+
+                                if(result != null && result.isSuccessful()) {
+                                    ToastMessage.citySucessfullyCreated(self.nameEditText.getText().toString(), self);
+                                    finish();
+                                }
+
+                                else {
+                                    ToastMessage.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
+                                }
+
+                            }
+
+                            catch (JSONException e) {
                                 e.printStackTrace();
+                                ToastMessage.displayJSONReadError(self);
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
+                    ToastMessage.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
                 }
             }
 
