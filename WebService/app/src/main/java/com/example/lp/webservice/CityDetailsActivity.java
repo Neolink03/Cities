@@ -99,6 +99,7 @@ public class CityDetailsActivity extends AppCompatActivity {
     public void displayCityEditForm(View view) {
         Intent toCityEditActivity = new Intent(CityDetailsActivity.this, CityEditActivity.class);
         toCityEditActivity.putExtra("cityName", this.cityName);
+        toCityEditActivity.putExtra("actionOnSave", "update");
         startActivity(toCityEditActivity);
     }
 

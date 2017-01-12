@@ -80,4 +80,14 @@ public class ToastMessage {
 
         toast.show();
     };
+
+    public static void error(Context applicationContext) {
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                applicationContext,
+                "Erreur",
+                Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
 }

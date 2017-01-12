@@ -27,6 +27,11 @@ import java.util.Map;
 
 public class CityEditActivity extends AppCompatActivity {
 
+    private final String UPDATE_ACTION = "update";
+    private final String CREATE_ACTION = "create";
+
+    private String actionOnSave;
+
     private TextView tvCityName;
     private String cityName;
     private FloatingActionButton cityEditSavefloatingActionButton;
@@ -40,17 +45,19 @@ public class CityEditActivity extends AppCompatActivity {
     private EditText remotenessEditText;
     private EditText inhabitantNumberEditText;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_edit);
         cityEditSavefloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditSaveFloatingActionButton);
         loadEditTexts();
+        getActionFromExtras();
 
         if(NetworkChecker.isNetworkActivated(this)) {
 
             tvCityName = (TextView) findViewById(R.id.tvCityName);
-            this.cityName = fetchCityNameFromExtras();
+            //this.cityName = fetchCityNameFromExtras();
             displayCityNameTitle();
             this.cityEditSavefloatingActionButton.setVisibility(View.VISIBLE);
         }
@@ -72,7 +79,7 @@ public class CityEditActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.save_city_edit_menu:
-                createCity(null);
+                save();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -90,56 +97,40 @@ public class CityEditActivity extends AppCompatActivity {
         this.inhabitantNumberEditText = (EditText) findViewById(R.id.inhabitantNumberEditText);
     }
 
+    public void getActionFromExtras() {
+
+        this.actionOnSave = getIntent().getStringExtra("actionOnSave");
+
+        if(this.actionOnSave == null) {
+            finish();
+            System.err.println("The action on save must be 'create' or 'update' and set as extra on the intent start activity");
+            ToastMessage.error(this);
+        }
+    }
+
+    public void save() {
+
+        if(this.actionOnSave.equals(CREATE_ACTION)) {
+            createCity(null);
+        }
+
+        else if (this.actionOnSave.equals(UPDATE_ACTION)) {
+            updateCity();
+        }
+
+        else {
+            finish();
+            System.err.println("The action on save must be 'create' or 'update' and set as extra on the intent start activity");
+            ToastMessage.error(this);
+        }
+    }
+
     public String fetchCityNameFromExtras() {
         return getIntent().getStringExtra("cityName").trim();
     }
 
     public void displayCityNameTitle() {
         tvCityName.setText(cityName);
-    }
-
-    public void update() {
-        String tag_json_obj = "json_obj_req";
-
-        String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + cityName;
-
-        JsonObjectRequest request = new JsonObjectRequest
-                (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject cityListJSONArrayResponse) {
-                        System.out.println("ok");
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
-                    }
-                }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("nbr_habitants", "42");
-
-                return params;
-            }
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
-
-        };
-
-        RequestQueue.getInstance(this).addToRequestQueue(request);
-
     }
 
     public Map<String, String> fetchInfos() {
@@ -244,6 +235,49 @@ public class CityEditActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateCity() {
+
+        String ipServer = "http://10.0.2.1";
+        String url = ipServer + "/villes/" + cityName;
+        System.out.println("update");
+
+        /*
+        JsonObjectRequest request = new JsonObjectRequest
+                (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject cityListJSONArrayResponse) {
+                        System.out.println("ok");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                    }
+                }) {
+
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("nbr_habitants", "42");
+
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+
+        };
+
+        RequestQueue.getInstance(this).addToRequestQueue(request);
+        */
+
     }
 
     @Override
