@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/editCityDetailsMenu"
-        android:title="@string/editCityDetailsMenu" />
+        android:title="@string/editCityDetailsMenu"
+        android:icon="@android:drawable/ic_menu_edit"
+        app:showAsAction="ifRoom"/>
     <item android:id="@+id/deleteCityDetailsMenu"
-        android:title="@string/deleteCityDetailsMenu" />
+        android:title="@string/deleteCityDetailsMenu"
+        android:icon="@android:drawable/ic_delete"
+        app:showAsAction="ifRoom"/>
 </menu>
