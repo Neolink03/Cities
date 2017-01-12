@@ -135,14 +135,12 @@ public class CityListActivity extends AppCompatActivity {
     public void loadListView() {
 
         // Converting list of cities to inputs of the ListView
-        if (!this.cityNameList.isEmpty()) {
-            // Converting list of cities to inputs of the ListView
-            final ArrayAdapter adapter = new StableArrayAdapter(this,
-                    android.R.layout.simple_list_item_1, this.cityNameList.getNameCityList());
-            cityList.setAdapter(adapter);
-            setCityListViewListener();
-        }
-        else {
+        final ArrayAdapter adapter = new StableArrayAdapter(this,
+                android.R.layout.simple_list_item_1, this.cityNameList.getNameCityList());
+        cityList.setAdapter(adapter);
+        setCityListViewListener();
+
+        if (this.cityNameList.isEmpty()) {
             ToastMessage.noCityFound(this);
         }
     }
