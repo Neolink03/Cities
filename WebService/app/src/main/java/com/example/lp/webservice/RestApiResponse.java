@@ -7,18 +7,18 @@ import org.json.JSONException;
  * Created by lp on 12/01/2017.
  */
 
-public class restApiResponse {
+public class RestApiResponse {
 
     private int resultCode;
     private String resultMessage;
     private final int SUCCESS = 0;
 
-    private restApiResponse(int resultCode, String resultMessage) {
+    private RestApiResponse(int resultCode, String resultMessage) {
         this.resultMessage = resultMessage;
         this.resultCode = resultCode;
     }
 
-    public static restApiResponse createFromJsonArray(JSONArray result) {
+    public static RestApiResponse createFromJsonArray(JSONArray result) {
 
         try {
 
@@ -29,7 +29,7 @@ public class restApiResponse {
                 resultCode = result.getInt(1);
             }
 
-            return new restApiResponse(
+            return new RestApiResponse(
                 resultCode,
                 result.getString(2)
                 );
@@ -43,7 +43,7 @@ public class restApiResponse {
         return resultCode;
     }
 
-    public restApiResponse(String resultMessage) {
+    public RestApiResponse(String resultMessage) {
         this.resultMessage = resultMessage;
     }
 

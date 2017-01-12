@@ -182,7 +182,7 @@ public class CityEditActivity extends AppCompatActivity {
                         public void onResponse(JSONArray response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                restApiResponse result = restApiResponse.createFromJsonArray(response);
+                                RestApiResponse result = RestApiResponse.createFromJsonArray(response);
                                 System.out.println(result);
 
                                 if(result != null && result.isSuccessful()) {
