@@ -6,7 +6,8 @@
     <string name="citySearchBarHint">Ville</string>
     <string name="SearchButtonText">Rechercher</string>
 
-    <!-- CityDetailsActivity -->
+    <!-- Forms -->
+    <string name="nameLabelTextView">Nom : </string>
     <string name="postalCodeLabelTextView">Code postal : </string>
     <string name="inseeCodeLabelTextView">Code INSEE : </string>
     <string name="regionCodeLabelTextView">Code région : </string>
@@ -16,6 +17,8 @@
     <string name="inhabitantNumberLabelTextView">Nombre d\'habitants :</string>
     <string name="editCityDetailsMenu">Modifier</string>
     <string name="deleteCityDetailsMenu">Supprimer</string>
+    <string name="ajouter_une_ville">Ajouter une ville</string>
+
 
 
 </resources>

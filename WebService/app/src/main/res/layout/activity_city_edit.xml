@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_city_edit"
@@ -12,39 +12,160 @@
     android:orientation="vertical"
     tools:context="com.example.lp.webservice.CityEditActivity">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvCityName"
-        android:text="@string/defaultCityName"
-        android:fontFamily="sans-serif"
-        android:textSize="24sp"
-        android:textStyle="normal|bold"
-        android:textColor="#000"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <!-- Inhabitant number -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/inhabitantNumberLabelTextView"
-        android:textColor="#000"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvCityName"
+            android:text="@string/defaultCityName"
+            android:fontFamily="sans-serif"
+            android:textSize="24sp"
+            android:textStyle="normal|bold"
+            android:textColor="#000"/>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/InhabitantNumberEditText" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_gravity="bottom|end"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/ic_menu_save"
-        android:id="@+id/cityEditSaveFloatingActionButton"
-        app:backgroundTint="@android:color/holo_green_dark"
-        android:onClick="displayCityEditForm"
-        android:visibility="invisible" />
-</LinearLayout>
+        </ScrollView>
+
+
+
+        <!-- Name -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nameLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/nameEditText"
+            android:textColor="#000"
+            />
+
+        <!-- Postal code -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/postalCodeLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/postalCodeEditText"
+            android:textColor="#000" />
+
+        <!-- Region code -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/regionCodeLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/regionCodeEditText"
+            android:textColor="#000" />
+
+        <!-- INSEE code -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inseeCodeLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/inseeCodeEditText"
+            android:textColor="#000" />
+
+        <!-- Latitude -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/latitudeLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/latitudeEditText"
+            android:textColor="#000" />
+
+        <!-- Longitude -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/longitudeLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/longitudeEditText"
+            android:textColor="#000" />
+
+        <!-- Remoteness -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remotenessLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/remotenessEditText"
+            android:textColor="#000" />
+
+        <!-- Inhabitant number -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/inhabitantNumberLabelTextView"
+            android:textColor="#000"/>
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:inputType="number"
+            android:ems="10"
+            android:id="@+id/inhabitantNumberEditText"
+            android:textColor="#000" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:layout_gravity="bottom|end"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_save"
+            android:id="@+id/cityEditSaveFloatingActionButton"
+            app:backgroundTint="@android:color/holo_green_dark"
+            android:onClick="displayCityEditForm"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+
+</ScrollView>
