@@ -65,7 +65,7 @@ public class ToastMessage {
 
         android.widget.Toast toast = android.widget.Toast.makeText(
                 applicationContext,
-                "La ville " + cityName + " a bien été crée",
+                "La ville " + cityName + " a bien été créée",
                 Toast.LENGTH_SHORT);
 
         toast.show();
@@ -75,7 +75,7 @@ public class ToastMessage {
 
         android.widget.Toast toast = android.widget.Toast.makeText(
                 applicationContext,
-                "La ville " + cityName + " n'a pas pu être crée",
+                "La ville " + cityName + " n'a pas pu être créée",
                 Toast.LENGTH_SHORT);
 
         toast.show();
