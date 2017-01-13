@@ -9,6 +9,9 @@ import android.widget.Toast;
 
 public class ToastMessage {
 
+    public static final String UPDATE_SUCCESSFUL = " a bien été modifiée";
+    public static final String UPDATE_UNSUCCESSFUL = " n'a pas pu être modifiée";
+
     public static void displayUnexpectedServerResponse(Context applicationContext) {
         android.widget.Toast toast = android.widget.Toast.makeText(
                 applicationContext,
@@ -76,6 +79,20 @@ public class ToastMessage {
         android.widget.Toast toast = android.widget.Toast.makeText(
                 applicationContext,
                 "La ville " + cityName + " n'a pas pu être créée",
+                Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
+
+    public static void cityResultSave(String cityName, String resultOperation, Context applicationContext) {
+
+        if(null == cityName) {
+            cityName = "";
+        }
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                applicationContext,
+                "La ville " + cityName + resultOperation,
                 Toast.LENGTH_SHORT);
 
         toast.show();

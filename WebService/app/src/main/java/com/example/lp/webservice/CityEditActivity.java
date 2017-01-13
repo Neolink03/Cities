@@ -53,6 +53,7 @@ public class CityEditActivity extends AppCompatActivity {
         cityEditSavefloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditSaveFloatingActionButton);
         loadEditTexts();
         getActionFromExtras();
+        getCityNameFromExtras();
 
         preFillFormWithPreviousInfosFromExtras();
 
@@ -107,6 +108,11 @@ public class CityEditActivity extends AppCompatActivity {
             System.err.println("The action on save must be 'create' or 'update' and set as extra on the intent start activity");
             ToastMessage.error(this);
         }
+    }
+
+    public void getCityNameFromExtras() {
+
+        this.cityName = getIntent().getStringExtra("cityName");
     }
 
     public void getInseeCodeFromExtras() {
@@ -293,11 +299,11 @@ public class CityEditActivity extends AppCompatActivity {
 
                                 if(result != null && result.isSuccessful()) {
                                     finish();
-                                    System.out.println("City update OK");
+                                    ToastMessage.cityResultSave(self.cityName, ToastMessage.UPDATE_SUCCESSFUL, self);
                                 }
 
                                 else {
-                                    System.err.println("City update KO");
+                                    ToastMessage.cityResultSave(self.cityName, ToastMessage.UPDATE_UNSUCCESSFUL, self);
                                 }
 
                             }
@@ -311,7 +317,7 @@ public class CityEditActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    System.err.println("City update KO");
+                    ToastMessage.cityResultSave(self.cityName, ToastMessage.UPDATE_UNSUCCESSFUL, self);
                 }
             }
 
