@@ -18,11 +18,11 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.example.lp.webservice.Domain.CityList;
-import com.example.lp.webservice.NetworkChecker;
+import com.example.lp.webservice.Util.CityList;
+import com.example.lp.webservice.Util.NetworkChecker;
 import com.example.lp.webservice.R;
-import com.example.lp.webservice.RequestQueue;
-import com.example.lp.webservice.ToastMessage;
+import com.example.lp.webservice.Util.RequestQueue;
+import com.example.lp.webservice.Util.ToastMessage;
 
 import org.json.JSONArray;
 import org.json.JSONException;

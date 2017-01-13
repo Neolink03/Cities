@@ -1,4 +1,4 @@
-package com.example.lp.webservice;
+package com.example.lp.webservice.Util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

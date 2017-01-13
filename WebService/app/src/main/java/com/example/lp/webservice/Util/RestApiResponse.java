@@ -1,4 +1,4 @@
-package com.example.lp.webservice;
+package com.example.lp.webservice.Util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
