@@ -7,14 +7,14 @@
     <string name="SearchButtonText">Rechercher</string>
 
     <!-- Forms -->
-    <string name="nameLabelTextView">Nom : </string>
-    <string name="postalCodeLabelTextView">Code postal : </string>
-    <string name="inseeCodeLabelTextView">Code INSEE : </string>
-    <string name="regionCodeLabelTextView">Code région : </string>
-    <string name="latitudeLabelTextView">Latitude : </string>
-    <string name="longitudeLabelTextView">Longitude : </string>
-    <string name="remotenessLabelTextView">Éloignement : </string>
-    <string name="inhabitantNumberLabelTextView">Nombre d\'habitants : </string>
+    <string name="name">Nom</string>
+    <string name="postalCode">Code postal</string>
+    <string name="inseeCode">Code INSEE</string>
+    <string name="regionCode">Code région</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="remoteness">Éloignement</string>
+    <string name="inhabitantNumber">Nombre d\'habitants</string>
     <string name="editCityDetailsMenu">Modifier</string>
     <string name="deleteCityDetailsMenu">Supprimer</string>
     <string name="ajouter_une_ville">Ajouter une ville</string>

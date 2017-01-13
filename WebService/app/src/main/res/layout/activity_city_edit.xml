@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/nameLabelTextView"
+            android:text="@string/name"
             android:textColor="#000"/>
 
         <EditText
@@ -44,7 +44,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/inseeCodeLabelTextView"
+            android:text="@string/inseeCode"
             android:textColor="#000"/>
 
         <EditText
@@ -59,7 +59,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/postalCodeLabelTextView"
+            android:text="@string/postalCode"
             android:textColor="#000"/>
 
         <EditText
@@ -75,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/regionCodeLabelTextView"
+            android:text="@string/regionCode"
             android:textColor="#000"/>
 
         <EditText
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/latitudeLabelTextView"
+            android:text="@string/latitude"
             android:textColor="#000"/>
 
         <EditText
@@ -103,7 +103,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/longitudeLabelTextView"
+            android:text="@string/longitude"
             android:textColor="#000"/>
 
         <EditText
@@ -118,7 +118,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/remotenessLabelTextView"
+            android:text="@string/remoteness"
             android:textColor="#000"/>
 
         <EditText
@@ -133,7 +133,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/inhabitantNumberLabelTextView"
+            android:text="@string/inhabitantNumber"
             android:textColor="#000"/>
 
         <EditText

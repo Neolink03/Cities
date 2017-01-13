@@ -190,13 +190,13 @@ public class CityDetailsActivity extends AppCompatActivity {
         if(null != this.city) {
             ArrayList<String> details = city.getDetailsAsArray();
             ArrayList<String> labels = new ArrayList<>();
-            labels.add(getString(R.string.inseeCodeLabelTextView));
-            labels.add(getString(R.string.postalCodeLabelTextView));
-            labels.add(getString(R.string.regionCodeLabelTextView));
-            labels.add(getString(R.string.latitudeLabelTextView));
-            labels.add(getString(R.string.longitudeLabelTextView));
-            labels.add(getString(R.string.remotenessLabelTextView));
-            labels.add(getString(R.string.inhabitantNumberLabelTextView));
+            labels.add(getString(R.string.inseeCode) + " : ");
+            labels.add(getString(R.string.postalCode)  + " : ");
+            labels.add(getString(R.string.regionCode)  + " : ");
+            labels.add(getString(R.string.latitude)  + " : ");
+            labels.add(getString(R.string.longitude)  + " : ");
+            labels.add(getString(R.string.remoteness)  + " : ");
+            labels.add(getString(R.string.inhabitantNumber)  + " : ");
 
             StringBuilder detailsText = new StringBuilder();
 
