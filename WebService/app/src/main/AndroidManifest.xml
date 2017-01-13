@@ -20,6 +20,7 @@
         </activity>
         <activity android:name=".Activity.CityDetailsActivity" />
         <activity android:name=".Activity.CityEditActivity"></activity>
+        <activity android:name=".Activity.PreferenceActivity"></activity>
     </application>
 
 </manifest>
