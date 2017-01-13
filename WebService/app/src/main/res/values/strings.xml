@@ -19,7 +19,8 @@
     <string name="deleteCityDetailsMenu">Supprimer</string>
     <string name="ajouter_une_ville">Ajouter une ville</string>
     <string name="save">Sauvegarder</string>
-    <string name="create_city_title_edit_form">Création d\'une nouvelle ville</string>
+    <string name="create_city_title_edit_form">Création ville</string>
+    <string name="update_city_title_edit_form">Modification ville</string>
 
 
 </resources>

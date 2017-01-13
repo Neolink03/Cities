@@ -31,7 +31,7 @@ public class CityEditActivity extends AppCompatActivity {
 
     private String actionOnSave;
 
-    private TextView tvCityName;
+    private TextView titleEditFormTextView;
     private String cityName;
     private String inseeCode;
     private FloatingActionButton cityEditSavefloatingActionButton;
@@ -53,13 +53,13 @@ public class CityEditActivity extends AppCompatActivity {
         cityEditSavefloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditSaveFloatingActionButton);
         loadEditTexts();
         getActionFromExtras();
+
         preFillFormWithPreviousInfosFromExtras();
 
         if(NetworkChecker.isNetworkActivated(this)) {
 
-            tvCityName = (TextView) findViewById(R.id.tvCityName);
-            //this.cityName = displayNameFromExtras();
-            displayCityNameTitle();
+            titleEditFormTextView = (TextView) findViewById(R.id.tvCityName);
+            displayTitleFromExtras();
             this.cityEditSavefloatingActionButton.setVisibility(View.VISIBLE);
         }
         else {
@@ -120,8 +120,6 @@ public class CityEditActivity extends AppCompatActivity {
         }
     }
 
-
-
     public void save(View button) {
 
         if(this.actionOnSave.equals(CREATE_ACTION)) {
@@ -143,8 +141,8 @@ public class CityEditActivity extends AppCompatActivity {
         return getIntent().getStringExtra("cityName").trim();
     }
 
-    public void displayCityNameTitle() {
-        tvCityName.setText(cityName);
+    public void displayTitleFromExtras() {
+        titleEditFormTextView.setText(getIntent().getStringExtra("title"));
     }
 
     public Map<String, String> fetchInfos() {

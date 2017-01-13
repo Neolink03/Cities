@@ -122,6 +122,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         toCityEditActivity.putExtra("remoteness", caracteristics.get(5));
         toCityEditActivity.putExtra("inhabitantNumber", caracteristics.get(6));
 
+        toCityEditActivity.putExtra("title", getString(R.string.update_city_title_edit_form));
         toCityEditActivity.putExtra("actionOnSave", "update");
 
         startActivity(toCityEditActivity);
