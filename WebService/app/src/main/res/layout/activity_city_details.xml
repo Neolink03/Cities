@@ -21,97 +21,11 @@
         android:textStyle="normal|bold"
         android:textColor="#000"/>
 
-    <GridLayout
+    <TextView
+        android:id="@+id/city_details_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:rowCount="7"
-        android:columnCount="2">
-
-        <!-- INSEE code -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inseeCodeLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/inseeCodeLabelTextView"
-            android:textColor="#000"/>
-
-        <!-- Postal code -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/postalCodeLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_height="wrap_content"
-            android:id="@+id/postalCodeLabelTextView"
-            android:textColor="#000"
-            android:layout_width="wrap_content" />
-
-        <!-- Region code -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/regionCodeLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/regionCodeLabelTextView"
-            android:textColor="#000"/>
-
-        <!-- Latitude -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/latitudeLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/latitudeLabelTextView"
-            android:textColor="#000"/>
-
-        <!-- Longitude -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/longitudeLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/longitudeLabelTextView"
-            android:textColor="#000"/>
-
-        <!-- Remoteness -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/remotenessLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/remotenessLabelTextView"
-            android:textColor="#000"/>
-
-        <!-- Inhabitant number -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/inhabitantNumberLabelTextView"
-            android:textColor="#000"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/inhabitantNumberTextView"
-            android:textColor="#000"/>
-
-    </GridLayout>
+        android:textColor="@android:color/black" />
 
     <android.support.design.widget.FloatingActionButton
         android:layout_width="match_parent"

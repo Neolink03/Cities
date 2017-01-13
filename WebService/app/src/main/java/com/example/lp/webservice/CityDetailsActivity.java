@@ -27,9 +27,10 @@ public class CityDetailsActivity extends AppCompatActivity {
     private FloatingActionButton cityEditfloatingActionButton;
 
     private TextView cityNameTitleTextView;
+    private TextView cityDetails;
     private ArrayList<TextView> cityDetailTextViews;
 
-    private City cityDetails;
+    private City city;
     private JSONObject cityDetailsJsonObjet;
 
     @Override
@@ -37,6 +38,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_details);
         this.cityNameTitleTextView = (TextView) findViewById(R.id.cityNameTitleTextView);
+        this.cityDetails = (TextView) findViewById(R.id.city_details_textview);
         cityEditfloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditFloatingActionButton);
 
         displayNameFromExtras();
@@ -83,17 +85,24 @@ public class CityDetailsActivity extends AppCompatActivity {
         }
     }
 
+    public String getFilters() {
+
+        String requiredFields = "Nom_Ville-Code_INSEE-Code_Region";
+
+        return requiredFields + "-Code_Postal";
+    }
+
     public void deleteCity() {
 
         String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + this.cityDetails.getInseeCode();
+        String url = ipServer + "/villes/" + this.city.getInseeCode();
 
         final CityDetailsActivity self = this;
         JsonArrayRequest deleteRequest = new JsonArrayRequest
                 (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray cityListJSONArrayResponse) {
-                        ToastMessage.citySucessfullyDeleted(self.cityDetails.getName(), self);
+                        ToastMessage.citySucessfullyDeleted(self.city.getName(), self);
                         finish();
 
                     }
@@ -101,7 +110,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        ToastMessage.cityUnSucessfullyDeleted(self.cityDetails.getName(), self);
+                        ToastMessage.cityUnSucessfullyDeleted(self.city.getName(), self);
                     }
                 });
 
@@ -111,9 +120,9 @@ public class CityDetailsActivity extends AppCompatActivity {
     public void displayCityEditForm(View view) {
         Intent toCityEditActivity = new Intent(CityDetailsActivity.this, CityEditActivity.class);
 
-        ArrayList<String> caracteristics = this.cityDetails.getCharacteristicsAsArray();
+        ArrayList<String> caracteristics = this.city.getDetailsAsArray();
 
-        toCityEditActivity.putExtra("cityName", this.cityDetails.getName());
+        toCityEditActivity.putExtra("cityName", this.city.getName());
         toCityEditActivity.putExtra("inseeCode", caracteristics.get(0));
         toCityEditActivity.putExtra("postalCode", caracteristics.get(1));
         toCityEditActivity.putExtra("regionCode", caracteristics.get(2));
@@ -136,9 +145,7 @@ public class CityDetailsActivity extends AppCompatActivity {
 
         String inseeCode = getIntent().getStringExtra("inseeCode");
         String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + inseeCode;
-
-        loadCityDetailsTextViews();
+        String url = ipServer + "/villes/" + inseeCode + "/" + getFilters();
 
         // The request always return a JsonArray
         JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
@@ -162,7 +169,7 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void loadCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
         try {
-            this.cityDetails = City.createFromJSONArray(cityListJSONArray);
+            this.city = City.createFromJSONArray(cityListJSONArray);
         }
 
         catch (JSONException exception) {
@@ -173,36 +180,37 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void loadCityDetails() {
 
-        if(null != this.cityDetails) {
-            ArrayList<String> cityDetailsInfos = this.cityDetails.getCharacteristicsAsArray();
-            String info;
+        if(null != this.city) {
+            ArrayList<String> details = city.getDetailsAsArray();
+            ArrayList<String> labels = new ArrayList<>();
+            labels.add(getString(R.string.inseeCodeLabelTextView));
+            labels.add(getString(R.string.postalCodeLabelTextView));
+            labels.add(getString(R.string.regionCodeLabelTextView));
+            labels.add(getString(R.string.latitudeLabelTextView));
+            labels.add(getString(R.string.longitudeLabelTextView));
+            labels.add(getString(R.string.remotenessLabelTextView));
+            labels.add(getString(R.string.inhabitantNumberLabelTextView));
 
-            String details;
-            for (int i = 0; i < this.cityDetailTextViews.size() ; i++) {
-                info = cityDetailsInfos.get(i);
-                this.cityDetailTextViews.get(i).setText(info);
+            StringBuilder detailsText = new StringBuilder();
+
+            for (int i = 0 ; i < details.size() ; i++) {
+
+                if ( ! details.get(i).isEmpty()) {
+                    detailsText.append(labels.get(i)).append(details.get(i)).append("\n");
+                }
             }
+
+            this.cityDetails.setText(detailsText.toString());
         }
     }
 
     public void displayCityEditFabIfLoadingDatasSuccessful() {
-        if(null == this.cityDetails) {
+        if(null == this.city) {
             this.cityEditfloatingActionButton.setVisibility(View.INVISIBLE);
         }
         else {
             this.cityEditfloatingActionButton.setVisibility(View.VISIBLE);
         }
-    }
-
-    public void loadCityDetailsTextViews() {
-        this.cityDetailTextViews = new ArrayList<TextView>();
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.postalCodeLabelTextView) );
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.regionCodeLabelTextView) );
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.inseeCodeLabelTextView) );
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.latitudeLabelTextView) );
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.longitudeLabelTextView) );
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.remotenessLabelTextView) );
-        this.cityDetailTextViews.add( (TextView) findViewById(R.id.inhabitantNumberTextView) );
     }
 
     @Override

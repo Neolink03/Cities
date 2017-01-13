@@ -14,7 +14,7 @@
     <string name="latitudeLabelTextView">Latitude : </string>
     <string name="longitudeLabelTextView">Longitude : </string>
     <string name="remotenessLabelTextView">Éloignement : </string>
-    <string name="inhabitantNumberLabelTextView">Nombre d\'habitants :</string>
+    <string name="inhabitantNumberLabelTextView">Nombre d\'habitants : </string>
     <string name="editCityDetailsMenu">Modifier</string>
     <string name="deleteCityDetailsMenu">Supprimer</string>
     <string name="ajouter_une_ville">Ajouter une ville</string>

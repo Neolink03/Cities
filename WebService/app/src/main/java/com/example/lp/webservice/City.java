@@ -59,7 +59,7 @@ public class City {
         );
     }
 
-    public ArrayList<String> getCharacteristicsAsArray() {
+    public ArrayList<String> getDetailsAsArray() {
         ArrayList<String> cityCharacteristics = new ArrayList<String>();
         cityCharacteristics.add( ( (this.inseeCode != INVALID_VALUE) ? Integer.toString(this.inseeCode) : "") );
         cityCharacteristics.add( ( (this.postalCode != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") );
