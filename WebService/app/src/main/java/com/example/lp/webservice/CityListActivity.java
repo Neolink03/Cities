@@ -14,24 +14,16 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CityListActivity extends AppCompatActivity {
 
@@ -75,7 +67,7 @@ public class CityListActivity extends AppCompatActivity {
 
     public void displayCityEditForm() {
         Intent toCityEditActivity = new Intent(CityListActivity.this, CityEditActivity.class);
-        toCityEditActivity.putExtra("cityName", "");
+        toCityEditActivity.putExtra("title", getString(R.string.create_city_title_edit_form));
         toCityEditActivity.putExtra("actionOnSave", "create");
         startActivity(toCityEditActivity);
     }
@@ -139,14 +131,14 @@ public class CityListActivity extends AppCompatActivity {
         final ArrayAdapter adapter = new StableArrayAdapter(this,
                 android.R.layout.simple_list_item_1, this.cityNameList.getNameCityList());
         cityList.setAdapter(adapter);
-        setCityListViewListener();
+        displayCityDetailsOnListItemClick();
 
         if (this.cityNameList.isEmpty()) {
             ToastMessage.noCityFound(this);
         }
     }
 
-    public void setCityListViewListener() {
+    public void displayCityDetailsOnListItemClick() {
         final CityListActivity self = this;
         cityList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -155,12 +147,13 @@ public class CityListActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // Get position of the clicked city and display its details
-                final String city = (String) parent.getItemAtPosition(position);
-                displayCityDetails(self.cityNameList.getInseeCodeAtPosition(position));
+                final String item = (String) parent.getItemAtPosition(position);
+                displayCityDetails(self.cityNameList.getInseeCodeAtPosition(position), item);
             }
 
-            private void displayCityDetails(int inseeCode) {
+            private void displayCityDetails(int inseeCode, String cityName) {
                 Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailsActivity.class);
+                cityDetailIntent.putExtra("cityName", cityName);
                 cityDetailIntent.putExtra("inseeCode", Integer.toString(inseeCode));
                 startActivity(cityDetailIntent);
             }

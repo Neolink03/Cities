@@ -24,9 +24,9 @@ import java.util.ArrayList;
 public class CityDetailsActivity extends AppCompatActivity {
 
     private TextView tvCityName;
-    private String cityName;
     private FloatingActionButton cityEditfloatingActionButton;
 
+    private TextView cityNameTitleTextView;
     private ArrayList<TextView> cityDetailTextViews;
 
     private City cityDetails;
@@ -36,12 +36,12 @@ public class CityDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_details);
-        tvCityName = (TextView) findViewById(R.id.tvCityName);
+        this.cityNameTitleTextView = (TextView) findViewById(R.id.cityNameTitleTextView);
         cityEditfloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditFloatingActionButton);
 
+        displayNameFromExtras();
+
         if(NetworkChecker.isNetworkActivated(this)) {
-            //this.cityName = fetchCityNameFromExtras();
-            //displayCityNameTitle();
             displayCityDetails();
         }
         else {
@@ -54,8 +54,6 @@ public class CityDetailsActivity extends AppCompatActivity {
         super.onResume();
 
         if(NetworkChecker.isNetworkActivated(this)) {
-            //this.cityName = fetchCityNameFromExtras();
-            //displayCityNameTitle();
             displayCityDetails();
         }
         else {
@@ -129,12 +127,8 @@ public class CityDetailsActivity extends AppCompatActivity {
         startActivity(toCityEditActivity);
     }
 
-    public String fetchCityNameFromExtras() {
-        return getIntent().getStringExtra("cityName").trim();
-    }
-
-    public void displayCityNameTitle() {
-        tvCityName.setText(cityName);
+    public void displayNameFromExtras() {
+        this.cityNameTitleTextView.setText(getIntent().getStringExtra("cityName"));
     }
 
     public void displayCityDetails() {

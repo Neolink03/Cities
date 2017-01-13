@@ -58,7 +58,7 @@ public class CityEditActivity extends AppCompatActivity {
         if(NetworkChecker.isNetworkActivated(this)) {
 
             tvCityName = (TextView) findViewById(R.id.tvCityName);
-            //this.cityName = fetchCityNameFromExtras();
+            //this.cityName = displayNameFromExtras();
             displayCityNameTitle();
             this.cityEditSavefloatingActionButton.setVisibility(View.VISIBLE);
         }
