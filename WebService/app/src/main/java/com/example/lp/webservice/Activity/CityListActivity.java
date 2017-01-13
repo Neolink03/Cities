@@ -39,6 +39,9 @@ public class CityListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        displayPreferenceEditor();
+
         setContentView(R.layout.activity_city_list);
 
         cityList = (ListView) findViewById(R.id.cityListListView);
@@ -68,6 +71,11 @@ public class CityListActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void displayPreferenceEditor() {
+        Intent toPreferenceActivity = new Intent(CityListActivity.this, PreferenceActivity.class);
+        startActivity(toPreferenceActivity);
     }
 
     public void displayCityEditForm() {

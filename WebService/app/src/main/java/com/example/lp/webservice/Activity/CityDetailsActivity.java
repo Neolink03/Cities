@@ -1,6 +1,7 @@
 package com.example.lp.webservice.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -92,9 +93,10 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public String getFilters() {
 
-        String requiredFields = "Nom_Ville-Code_INSEE-Code_Region";
+        SharedPreferences settings = getSharedPreferences(PreferenceActivity.APP_PREFERENCES, 0);
+        String filters = settings.getString(PreferenceActivity.FILTERS, null);
 
-        return requiredFields + "-Code_Postal";
+        return filters;
     }
 
     public void deleteCity() {
