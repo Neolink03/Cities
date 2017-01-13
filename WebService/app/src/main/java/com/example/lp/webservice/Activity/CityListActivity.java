@@ -56,12 +56,6 @@ public class CityListActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        searchCityList(null);
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
@@ -71,6 +65,12 @@ public class CityListActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        searchCityList(null);
     }
 
     public void displayPreferenceEditor() {

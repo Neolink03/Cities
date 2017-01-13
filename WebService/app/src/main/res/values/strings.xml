@@ -21,6 +21,7 @@
     <string name="save">Sauvegarder</string>
     <string name="create_city_title_edit_form">Création ville</string>
     <string name="update_city_title_edit_form">Modification ville</string>
+    <string name="filter_title">Détails ville à afficher</string>
 
 
 </resources>
