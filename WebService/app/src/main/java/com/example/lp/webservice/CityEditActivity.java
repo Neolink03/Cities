@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +33,7 @@ public class CityEditActivity extends AppCompatActivity {
 
     private TextView tvCityName;
     private String cityName;
+    private String inseeCode;
     private FloatingActionButton cityEditSavefloatingActionButton;
 
     private EditText nameEditText;
@@ -53,6 +53,7 @@ public class CityEditActivity extends AppCompatActivity {
         cityEditSavefloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditSaveFloatingActionButton);
         loadEditTexts();
         getActionFromExtras();
+        preFillFormWithPreviousInfosFromExtras();
 
         if(NetworkChecker.isNetworkActivated(this)) {
 
@@ -79,7 +80,7 @@ public class CityEditActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.save_city_edit_menu:
-                save();
+                save(null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -108,10 +109,23 @@ public class CityEditActivity extends AppCompatActivity {
         }
     }
 
-    public void save() {
+    public void getInseeCodeFromExtras() {
+
+        this.inseeCode = getIntent().getStringExtra("inseeCode");
+
+        if(this.inseeCode == null) {
+            finish();
+            System.err.println("Insee code not found");
+            ToastMessage.error(this);
+        }
+    }
+
+
+
+    public void save(View button) {
 
         if(this.actionOnSave.equals(CREATE_ACTION)) {
-            createCity(null);
+            createCity();
         }
 
         else if (this.actionOnSave.equals(UPDATE_ACTION)) {
@@ -177,7 +191,7 @@ public class CityEditActivity extends AppCompatActivity {
 
     }
 
-    public void createCity(View createCityButton) {
+    public void createCity() {
         String url = "http://10.0.2.1/villes/";
 
         Map<String, String> params = fetchInfos();
@@ -237,46 +251,85 @@ public class CityEditActivity extends AppCompatActivity {
         }
     }
 
+    public void preFillFormWithPreviousInfosFromExtras() {
+
+        if(this.actionOnSave != null && this.actionOnSave.equals(UPDATE_ACTION)) {
+            this.nameEditText.setText(getIntent().getStringExtra("cityName"));
+            this.inseeCodeEditText.setText(getIntent().getStringExtra("inseeCode"));
+            this.postalCodeEditText.setText(getIntent().getStringExtra("postalCode"));
+            this.regionCodeEditText.setText(getIntent().getStringExtra("regionCode"));
+            this.latitudeEditText.setText(getIntent().getStringExtra("latitude"));
+            this.longitudeEditText.setText(getIntent().getStringExtra("longitude"));
+            this.remotenessEditText.setText(getIntent().getStringExtra("remoteness"));
+            this.inhabitantNumberEditText.setText(getIntent().getStringExtra("inhabitantNumber"));
+        }
+
+    }
+
     public void updateCity() {
 
+        getInseeCodeFromExtras();
+
         String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + cityName;
+        String url = ipServer + "/villes/" + this.inseeCode;
         System.out.println("update");
+        System.out.println(this.inseeCode);
 
-        /*
-        JsonObjectRequest request = new JsonObjectRequest
-                (Request.Method.PUT, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject cityListJSONArrayResponse) {
-                        System.out.println("ok");
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
-                    }
-                }) {
+        Map<String, String> params = fetchInfos();
 
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("nbr_habitants", "42");
+        System.out.println(new JSONObject(params).toString());
+        try {
+            JSONArray jsonRequestBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
+            System.out.println(jsonRequestBody.toString());
 
-                return params;
+            final CityEditActivity self = this;
+
+            JsonArrayRequest request = new JsonArrayRequest(Request.Method.PUT, url, jsonRequestBody,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
+                                VolleyLog.v("Response:%n %s", response.toString(4));
+                                RestApiResponse result = RestApiResponse.createFromJsonArray(response);
+                                System.out.println(result);
+
+                                if(result != null && result.isSuccessful()) {
+                                    finish();
+                                    System.out.println("City update OK");
+                                }
+
+                                else {
+                                    System.err.println("City update KO");
+                                }
+
+                            }
+
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                                ToastMessage.displayJSONReadError(self);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    System.err.println("City update KO");
+                }
             }
 
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json");
-                return headers;
-            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json");
+                    return headers;
+                }
+            };
 
-        };
-
-        RequestQueue.getInstance(this).addToRequestQueue(request);
-        */
+            RequestQueue.getInstance(this).addToRequestQueue(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 

@@ -50,6 +50,20 @@ public class CityDetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(NetworkChecker.isNetworkActivated(this)) {
+            //this.cityName = fetchCityNameFromExtras();
+            //displayCityNameTitle();
+            displayCityDetails();
+        }
+        else {
+            ToastMessage.noNetworkConnection(this);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.city_details_menu, menu);
@@ -98,8 +112,20 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void displayCityEditForm(View view) {
         Intent toCityEditActivity = new Intent(CityDetailsActivity.this, CityEditActivity.class);
-        toCityEditActivity.putExtra("cityName", this.cityName);
+
+        ArrayList<String> caracteristics = this.cityDetails.getCharacteristicsAsArray();
+
+        toCityEditActivity.putExtra("cityName", this.cityDetails.getName());
+        toCityEditActivity.putExtra("inseeCode", caracteristics.get(0));
+        toCityEditActivity.putExtra("postalCode", caracteristics.get(1));
+        toCityEditActivity.putExtra("regionCode", caracteristics.get(2));
+        toCityEditActivity.putExtra("latitude", caracteristics.get(3));
+        toCityEditActivity.putExtra("longitude", caracteristics.get(4));
+        toCityEditActivity.putExtra("remoteness", caracteristics.get(5));
+        toCityEditActivity.putExtra("inhabitantNumber", caracteristics.get(6));
+
         toCityEditActivity.putExtra("actionOnSave", "update");
+
         startActivity(toCityEditActivity);
     }
 
@@ -110,11 +136,6 @@ public class CityDetailsActivity extends AppCompatActivity {
     public void displayCityNameTitle() {
         tvCityName.setText(cityName);
     }
-
-    //test in db :
-    // select Nom_Ville, Code_Postal, Code_INSEE, Code_Region, Latitude, Longitude, Eloignement
-    // from villes
-    // where Nom_Ville LIKE "%Ambl" limit 30;
 
     public void displayCityDetails() {
 

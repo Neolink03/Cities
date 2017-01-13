@@ -154,7 +154,7 @@
             app:srcCompat="@android:drawable/ic_menu_save"
             android:id="@+id/cityEditSaveFloatingActionButton"
             app:backgroundTint="@android:color/holo_green_dark"
-            android:onClick="createCity"
+            android:onClick="save"
             android:visibility="invisible" />
 
     </LinearLayout>

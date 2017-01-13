@@ -61,13 +61,13 @@ public class City {
 
     public ArrayList<String> getCharacteristicsAsArray() {
         ArrayList<String> cityCharacteristics = new ArrayList<String>();
-        cityCharacteristics.add( ( (this.postalCode != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") + "\n" );
-        cityCharacteristics.add( this.regionCode + "\n");
-        cityCharacteristics.add( ( (this.inseeCode != INVALID_VALUE) ? Integer.toString(this.inseeCode) : "") + "\n");
-        cityCharacteristics.add( ( (this.latitude != INVALID_VALUE) ? Double.toString(this.latitude) : "") + "\n" );
-        cityCharacteristics.add( ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") + "\n" );
-        cityCharacteristics.add( ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") + "\n" );
-        cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.inhabitantNumber) : "") + "\n");
+        cityCharacteristics.add( ( (this.inseeCode != INVALID_VALUE) ? Integer.toString(this.inseeCode) : "") );
+        cityCharacteristics.add( ( (this.postalCode != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") );
+        cityCharacteristics.add( this.regionCode );
+        cityCharacteristics.add( ( (this.latitude != INVALID_VALUE) ? Double.toString(this.latitude) : "") );
+        cityCharacteristics.add( ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") );
+        cityCharacteristics.add( ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") );
+        cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.inhabitantNumber) : "") );
         return cityCharacteristics;
     }
 
@@ -77,5 +77,29 @@ public class City {
 
     public int getInseeCode() {
         return inseeCode;
+    }
+
+    public int getPostalCode() {
+        return postalCode;
+    }
+
+    public String getRegionCode() {
+        return regionCode;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public double getRemoteness() {
+        return remoteness;
+    }
+
+    public int getInhabitantNumber() {
+        return inhabitantNumber;
     }
 }
