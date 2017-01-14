@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 
 import com.example.lp.webservice.Domain.City;
 import com.example.lp.webservice.R;
+import com.example.lp.webservice.Util.ToastMessage;
 
 import java.util.HashMap;
 
@@ -30,8 +31,6 @@ public class PreferenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preference);
         settings = getSharedPreferences(APP_PREFERENCES, 0);
         loadFilterListCheckBoxes();
-
-        save();
     }
 
     @Override
@@ -82,6 +81,8 @@ public class PreferenceActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = this.settings.edit();
         editor.putString(FILTERS, getSelectedFilters());
         editor.apply();
+        ToastMessage.preferencesSaved(this);
+        finish();
     }
 
     @Override

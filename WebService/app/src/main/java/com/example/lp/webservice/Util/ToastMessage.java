@@ -98,6 +98,16 @@ public class ToastMessage {
         toast.show();
     };
 
+    public static void preferencesSaved(Context applicationContext) {
+
+        android.widget.Toast toast = android.widget.Toast.makeText(
+                applicationContext,
+                "Préférences sauvegardées",
+                Toast.LENGTH_SHORT);
+
+        toast.show();
+    };
+
     public static void error(Context applicationContext) {
 
         android.widget.Toast toast = android.widget.Toast.makeText(
