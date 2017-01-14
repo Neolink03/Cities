@@ -78,7 +78,7 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
+
         switch (item.getItemId()) {
             case R.id.editCityDetailsMenu:
                 displayCityEditForm(null);
@@ -109,27 +109,36 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void deleteCity() {
 
-        String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + this.city.getInseeCode();
+        if (NetworkChecker.isNetworkActivated(this)) {
 
-        final CityDetailsActivity self = this;
-        JsonArrayRequest deleteRequest = new JsonArrayRequest
-                (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray cityListJSONArrayResponse) {
-                        ToastMessage.citySucessfullyDeleted(self.city.getName(), self);
-                        finish();
+            String ipServer = "http://10.0.2.1";
+            String url = ipServer + "/villes/" + this.city.getInseeCode();
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        ToastMessage.cityUnSucessfullyDeleted(self.city.getName(), self);
-                    }
-                });
+            final CityDetailsActivity self = this;
+            JsonArrayRequest deleteRequest = new JsonArrayRequest
+                    (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray cityListJSONArrayResponse) {
+                            ToastMessage.citySucessfullyDeleted(self.city.getName(), self);
+                            finish();
 
-        RequestQueue.getInstance(this).addToRequestQueue(deleteRequest);
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            ToastMessage.cityUnSucessfullyDeleted(self.city.getName(), self);
+                        }
+                    });
+
+            RequestQueue.getInstance(this).addToRequestQueue(deleteRequest);
+        }
+
+        else {
+            ToastMessage.noNetworkConnection(this);
+        }
+
+
     }
 
     public void displayCityEditForm(View view) {
@@ -158,28 +167,36 @@ public class CityDetailsActivity extends AppCompatActivity {
 
     public void displayCityDetails() {
 
-        String inseeCode = getIntent().getStringExtra("inseeCode");
-        String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + inseeCode + "/" + getFilters();
+        if (NetworkChecker.isNetworkActivated(this)) {
 
-        // The request always return a JsonArray
-        JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray cityListJSONArrayResponse) {
-                        loadCityDetailsFromJSONArray(cityListJSONArrayResponse);
-                        loadCityDetails();
-                        displayCityEditFabIfLoadingDatasSuccessful();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
-                    }
-                });
+            String inseeCode = getIntent().getStringExtra("inseeCode");
+            String ipServer = "http://10.0.2.1";
+            String url = ipServer + "/villes/" + inseeCode + "/" + getFilters();
 
-        RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
+            // The request always return a JsonArray
+            JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray cityListJSONArrayResponse) {
+                            loadCityDetailsFromJSONArray(cityListJSONArrayResponse);
+                            loadCityDetails();
+                            displayCityEditFabIfLoadingDatasSuccessful();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                        }
+                    });
+
+            RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
+        }
+
+        else {
+            ToastMessage.noNetworkConnection(this);
+        }
+
     }
 
     public void loadCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
