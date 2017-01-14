@@ -15,6 +15,7 @@
     <string name="longitude">Longitude</string>
     <string name="remoteness">Éloignement</string>
     <string name="inhabitantNumber">Nombre d\'habitants</string>
+    <string name="gps_coodinates">Coordonnées GPS</string>
     <string name="editCityDetailsMenu">Modifier</string>
     <string name="deleteCityDetailsMenu">Supprimer</string>
     <string name="ajouter_une_ville">Ajouter une ville</string>

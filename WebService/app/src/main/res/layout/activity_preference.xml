@@ -22,36 +22,24 @@
         android:text="@string/postalCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox"
+        android:id="@+id/postal_code_filter_checkbox"
         android:checked="false" />
 
     <CheckBox
         android:text="@string/regionCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox2" />
+        android:id="@+id/region_code_filter_checkbox" />
 
     <CheckBox
-        android:text="@string/latitude"
+        android:text="@string/gps_coodinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox3" />
-
-    <CheckBox
-        android:text="@string/longitude"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox4" />
-
-    <CheckBox
-        android:text="@string/remoteness"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkBox4" />
+        android:id="@+id/gps_coordinates_filter_group_checkbox" />
 
     <CheckBox
         android:text="@string/inhabitantNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/checkBox5" />
+        android:id="@+id/inhabitant_number_filter_checkbox" />
 </LinearLayout>
