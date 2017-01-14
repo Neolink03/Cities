@@ -16,13 +16,16 @@
     <string name="remoteness">Éloignement</string>
     <string name="inhabitantNumber">Nombre d\'habitants</string>
     <string name="gps_coodinates">Coordonnées GPS</string>
-    <string name="editCityDetailsMenu">Modifier</string>
-    <string name="deleteCityDetailsMenu">Supprimer</string>
-    <string name="ajouter_une_ville">Ajouter une ville</string>
-    <string name="save">Sauvegarder</string>
+
     <string name="create_city_title_edit_form">Création ville</string>
     <string name="update_city_title_edit_form">Modification ville</string>
     <string name="filter_title">Détails ville à afficher</string>
 
+    <!-- Menu -->
+    <string name="ajouter_une_ville">Ajouter une ville</string>
+    <string name="editCityDetailsMenu">Modifier</string>
+    <string name="deleteCityDetailsMenu">Supprimer</string>
+    <string name="save">Sauvegarder</string>
+    <string name="edit_preferences">Paramètres</string>
 
 </resources>

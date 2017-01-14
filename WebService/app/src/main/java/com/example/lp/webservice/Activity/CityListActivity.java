@@ -62,6 +62,9 @@ public class CityListActivity extends AppCompatActivity {
             case R.id.create_city_list_menu:
                 displayCityEditForm();
                 return true;
+            case R.id.edit_preferences_menu:
+                this.displayPreferenceEditor();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

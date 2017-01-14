@@ -86,9 +86,17 @@ public class CityDetailsActivity extends AppCompatActivity {
             case R.id.deleteCityDetailsMenu:
                 deleteCity();
                 return true;
+            case R.id.edit_preferences_menu:
+                displayPreferenceEditor();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void displayPreferenceEditor() {
+        Intent toPreferenceActivity = new Intent(CityDetailsActivity.this, PreferenceActivity.class);
+        startActivity(toPreferenceActivity);
     }
 
     public String getFilters() {

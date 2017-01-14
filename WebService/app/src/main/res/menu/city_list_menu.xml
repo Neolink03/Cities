@@ -6,4 +6,10 @@
         android:title="@string/ajouter_une_ville"
         app:showAsAction="ifRoom">
     </item>
+
+    <item android:id="@+id/edit_preferences_menu"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="@string/edit_preferences"
+        app:showAsAction="ifRoom">
+    </item>
 </menu>
