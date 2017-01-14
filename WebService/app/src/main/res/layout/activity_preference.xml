@@ -22,8 +22,7 @@
         android:text="@string/postalCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/postal_code_filter_checkbox"
-        android:checked="false" />
+        android:id="@+id/postal_code_filter_checkbox" />
 
     <CheckBox
         android:text="@string/regionCode"

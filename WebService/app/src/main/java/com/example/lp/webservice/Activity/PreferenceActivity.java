@@ -6,15 +6,22 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.CheckBox;
 
 import com.example.lp.webservice.Domain.City;
 import com.example.lp.webservice.R;
+
+import java.util.HashMap;
 
 public class PreferenceActivity extends AppCompatActivity {
 
     public final static String APP_PREFERENCES = "app_preferences";
     public final static String FILTERS = "filters";
+    public final static String REQUIRED_FILTERS = City.NAME_DB_COL + "-" + City.INSEE_CODE_DB_COL;
+
     private SharedPreferences settings;
+
+    private HashMap<Integer, String> filterListCheckBoxes;
 
     @Override
     protected void onCreate(Bundle state){
@@ -22,6 +29,7 @@ public class PreferenceActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_preference);
         settings = getSharedPreferences(APP_PREFERENCES, 0);
+        loadFilterListCheckBoxes();
 
         save();
     }
@@ -38,20 +46,41 @@ public class PreferenceActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.save_preferences_menu:
+                save();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    public void loadFilterListCheckBoxes() {
+
+        this.filterListCheckBoxes = new HashMap<>();
+        this.filterListCheckBoxes.put(R.id.postal_code_filter_checkbox, City.POSTAL_CODE_DB_COL);
+        this.filterListCheckBoxes.put(R.id.region_code_filter_checkbox, City.REGION_CODE_DB_COL);
+        this.filterListCheckBoxes.put(R.id.gps_coordinates_filter_group_checkbox, City.LATITUDE_DB_COL + "-" + City.LONGITUDE_DB_COL + "-" + City.REMOTENESS_DB_COL);
+        this.filterListCheckBoxes.put(R.id.inhabitant_number_filter_checkbox, City.POSTAL_CODE_DB_COL);
+    }
+
+    public String getSelectedFilters() {
+
+        StringBuilder filters = new StringBuilder(REQUIRED_FILTERS);
+
+        for (int checboxId:
+                this.filterListCheckBoxes.keySet()) {
+            CheckBox checkbox = (CheckBox) findViewById(checboxId);
+
+            if((null != checkbox) && checkbox.isChecked()) {
+                filters.append("-").append(this.filterListCheckBoxes.get(checboxId));
+            }
+        }
+        
+        return filters.toString();
+    }
+
     public void save() {
         SharedPreferences.Editor editor = this.settings.edit();
-
-        String requiredFields = "Nom_Ville-Code_INSEE-Code_Region";
-        String filters = "Code_Postal" + "-" + City.LATITUDE_DB_COL + "-" + City.INHABITANT_NUMBER_DB_COL;
-
-        editor.putString(FILTERS, requiredFields + "-" + filters);
-
+        editor.putString(FILTERS, getSelectedFilters());
         editor.apply();
     }
 
