@@ -12,16 +12,13 @@ import com.example.lp.webservice.Domain.City;
 import com.example.lp.webservice.R;
 import com.example.lp.webservice.Util.ToastMessage;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PreferenceActivity extends AppCompatActivity {
 
     public final static String APP_PREFERENCES = "app_preferences";
     public final static String FILTERS = "filters";
-
-    private final String FILTER_SEPARATOR = "-";
-    private final String REQUIRED_FILTERS = City.NAME_DB_COL + "-" + City.INSEE_CODE_DB_COL;
+    public final static String REQUIRED_FILTERS = City.NAME_DB_COL + "-" + City.INSEE_CODE_DB_COL;
 
     private SharedPreferences settings;
 
@@ -34,7 +31,6 @@ public class PreferenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_preference);
         settings = getSharedPreferences(APP_PREFERENCES, 0);
         loadFilterListCheckBoxes();
-        //restoreSelectedFilters();
     }
 
     @Override
@@ -63,14 +59,6 @@ public class PreferenceActivity extends AppCompatActivity {
         this.filterListCheckBoxes.put(R.id.region_code_filter_checkbox, City.REGION_CODE_DB_COL);
         this.filterListCheckBoxes.put(R.id.gps_coordinates_filter_group_checkbox, City.LATITUDE_DB_COL + "-" + City.LONGITUDE_DB_COL + "-" + City.REMOTENESS_DB_COL);
         this.filterListCheckBoxes.put(R.id.inhabitant_number_filter_checkbox, City.POSTAL_CODE_DB_COL);
-    }
-
-    public void restoreSelectedFilters() {
-        String filters = this.settings.getString(FILTERS, null);
-        if (filters != null) {
-            String[] filterList = filters.split(FILTER_SEPARATOR);
-            System.out.println(filterList);
-        }
     }
 
     public String getSelectedFilters() {
