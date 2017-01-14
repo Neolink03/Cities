@@ -19,7 +19,7 @@ import com.example.lp.webservice.Domain.City;
 import com.example.lp.webservice.Util.NetworkChecker;
 import com.example.lp.webservice.R;
 import com.example.lp.webservice.Util.RequestQueue;
-import com.example.lp.webservice.Util.ToastMessage;
+import com.example.lp.webservice.Util.Alert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,7 +53,7 @@ public class CityDetailsActivity extends AppCompatActivity {
             displayCityDetails();
         }
         else {
-            ToastMessage.noNetworkConnection(this);
+            Alert.noNetworkConnection(this);
         }
     }
 
@@ -65,7 +65,7 @@ public class CityDetailsActivity extends AppCompatActivity {
             displayCityDetails();
         }
         else {
-            ToastMessage.noNetworkConnection(this);
+            Alert.noNetworkConnection(this);
         }
     }
 
@@ -119,7 +119,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                     (Request.Method.DELETE, url, null, new Response.Listener<JSONArray>() {
                         @Override
                         public void onResponse(JSONArray cityListJSONArrayResponse) {
-                            ToastMessage.citySucessfullyDeleted(self.city.getName(), self);
+                            Alert.citySucessfullyDeleted(self.city.getName(), self);
                             finish();
 
                         }
@@ -127,7 +127,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            ToastMessage.cityUnSucessfullyDeleted(self.city.getName(), self);
+                            Alert.cityUnSucessfullyDeleted(self.city.getName(), self);
                         }
                     });
 
@@ -135,7 +135,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         }
 
         else {
-            ToastMessage.noNetworkConnection(this);
+            Alert.noNetworkConnection(this);
         }
 
 
@@ -146,19 +146,26 @@ public class CityDetailsActivity extends AppCompatActivity {
 
         ArrayList<String> caracteristics = this.city.getDetailsAsArray();
 
-        toCityEditActivity.putExtra("cityName", this.city.getName());
-        toCityEditActivity.putExtra("inseeCode", caracteristics.get(0));
-        toCityEditActivity.putExtra("postalCode", caracteristics.get(1));
-        toCityEditActivity.putExtra("regionCode", caracteristics.get(2));
-        toCityEditActivity.putExtra("latitude", caracteristics.get(3));
-        toCityEditActivity.putExtra("longitude", caracteristics.get(4));
-        toCityEditActivity.putExtra("remoteness", caracteristics.get(5));
-        toCityEditActivity.putExtra("inhabitantNumber", caracteristics.get(6));
+        if (NetworkChecker.isNetworkActivated(this)) {
+            toCityEditActivity.putExtra("cityName", this.city.getName());
+            toCityEditActivity.putExtra("inseeCode", caracteristics.get(0));
+            toCityEditActivity.putExtra("postalCode", caracteristics.get(1));
+            toCityEditActivity.putExtra("regionCode", caracteristics.get(2));
+            toCityEditActivity.putExtra("latitude", caracteristics.get(3));
+            toCityEditActivity.putExtra("longitude", caracteristics.get(4));
+            toCityEditActivity.putExtra("remoteness", caracteristics.get(5));
+            toCityEditActivity.putExtra("inhabitantNumber", caracteristics.get(6));
 
-        toCityEditActivity.putExtra("title", getString(R.string.update_city_title_edit_form));
-        toCityEditActivity.putExtra("actionOnSave", "update");
+            toCityEditActivity.putExtra("title", getString(R.string.update_city_title_edit_form));
+            toCityEditActivity.putExtra("actionOnSave", "update");
 
-        startActivity(toCityEditActivity);
+            startActivity(toCityEditActivity);
+        }
+
+        else {
+            Alert.noNetworkConnection(this);
+        }
+
     }
 
     public void displayNameFromExtras() {
@@ -186,7 +193,7 @@ public class CityDetailsActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                            Alert.displayUnexpectedServerResponse(getApplicationContext());
                         }
                     });
 
@@ -194,7 +201,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         }
 
         else {
-            ToastMessage.noNetworkConnection(this);
+            Alert.noNetworkConnection(this);
         }
 
     }
@@ -206,7 +213,7 @@ public class CityDetailsActivity extends AppCompatActivity {
 
         catch (JSONException exception) {
             exception.printStackTrace();
-            ToastMessage.displayJSONReadError(getApplicationContext());
+            Alert.displayJSONReadError(getApplicationContext());
         }
     }
 

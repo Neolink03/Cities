@@ -7,7 +7,7 @@ import android.widget.Toast;
  * Created by jonathan on 10/12/16.
  */
 
-public class ToastMessage {
+public class Alert {
 
     public static final String UPDATE_SUCCESSFUL = " a bien été modifiée";
     public static final String UPDATE_UNSUCCESSFUL = " n'a pas pu être modifiée";

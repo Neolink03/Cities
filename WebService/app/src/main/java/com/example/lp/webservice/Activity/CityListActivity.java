@@ -22,7 +22,7 @@ import com.example.lp.webservice.Util.CityList;
 import com.example.lp.webservice.Util.NetworkChecker;
 import com.example.lp.webservice.R;
 import com.example.lp.webservice.Util.RequestQueue;
-import com.example.lp.webservice.Util.ToastMessage;
+import com.example.lp.webservice.Util.Alert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -101,10 +101,9 @@ public class CityListActivity extends AppCompatActivity {
 
     public void displayListNameCityList(String city) {
 
-        String url = "http://10.0.2.1/villes/search/" + city;
-
         if(NetworkChecker.isNetworkActivated(this)) {
 
+            String url = "http://10.0.2.1/villes/search/" + city;
             JsonArrayRequest fetchCityListRequest = new JsonArrayRequest
                     (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                         @Override
@@ -116,14 +115,14 @@ public class CityListActivity extends AppCompatActivity {
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             error.printStackTrace();
-                            ToastMessage.displayUnexpectedServerResponse(getApplicationContext());
+                            Alert.displayUnexpectedServerResponse(getApplicationContext());
                         }
                     });
 
             RequestQueue.getInstance(this).addToRequestQueue(fetchCityListRequest);
         }
         else {
-            ToastMessage.noNetworkConnection(this);
+            Alert.noNetworkConnection(this);
         }
     }
 
@@ -134,7 +133,7 @@ public class CityListActivity extends AppCompatActivity {
         }
         catch (JSONException e) {
             e.printStackTrace();
-            ToastMessage.displayJSONReadError(getApplicationContext());
+            Alert.displayJSONReadError(getApplicationContext());
         }
     }
 
@@ -150,7 +149,7 @@ public class CityListActivity extends AppCompatActivity {
         displayCityDetailsOnListItemClick();
 
         if (this.cityNameList.isEmpty()) {
-            ToastMessage.noCityFound(this);
+            Alert.noCityFound(this);
         }
     }
 
@@ -168,10 +167,18 @@ public class CityListActivity extends AppCompatActivity {
             }
 
             private void displayCityDetails(int inseeCode, String cityName) {
-                Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailsActivity.class);
-                cityDetailIntent.putExtra("cityName", cityName);
-                cityDetailIntent.putExtra("inseeCode", Integer.toString(inseeCode));
-                startActivity(cityDetailIntent);
+
+                if (NetworkChecker.isNetworkActivated(self)) {
+                    Intent cityDetailIntent = new Intent(CityListActivity.this, CityDetailsActivity.class);
+                    cityDetailIntent.putExtra("cityName", cityName);
+                    cityDetailIntent.putExtra("inseeCode", Integer.toString(inseeCode));
+                    startActivity(cityDetailIntent);
+                }
+
+                else {
+                    Alert.noNetworkConnection(self);
+                }
+
             }
 
         });

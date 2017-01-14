@@ -21,7 +21,7 @@ import com.example.lp.webservice.Util.NetworkChecker;
 import com.example.lp.webservice.R;
 import com.example.lp.webservice.Util.RequestQueue;
 import com.example.lp.webservice.Util.RestApiResponse;
-import com.example.lp.webservice.Util.ToastMessage;
+import com.example.lp.webservice.Util.Alert;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,6 +55,7 @@ public class CityEditActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_city_edit);
         cityEditSavefloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditSaveFloatingActionButton);
         loadEditTexts();
@@ -63,15 +64,9 @@ public class CityEditActivity extends AppCompatActivity {
 
         preFillFormWithPreviousInfosFromExtras();
 
-        if(NetworkChecker.isNetworkActivated(this)) {
-
-            titleEditFormTextView = (TextView) findViewById(R.id.tvCityName);
-            displayTitleFromExtras();
-            this.cityEditSavefloatingActionButton.setVisibility(View.VISIBLE);
-        }
-        else {
-            ToastMessage.noNetworkConnection(this);
-        }
+        titleEditFormTextView = (TextView) findViewById(R.id.tvCityName);
+        displayTitleFromExtras();
+        this.cityEditSavefloatingActionButton.setVisibility(View.VISIBLE);
 
     }
 
@@ -112,7 +107,7 @@ public class CityEditActivity extends AppCompatActivity {
         if(this.actionOnSave == null) {
             finish();
             System.err.println("The action on save must be 'create' or 'update' and set as extra on the intent start activity");
-            ToastMessage.error(this);
+            Alert.error(this);
         }
     }
 
@@ -128,25 +123,34 @@ public class CityEditActivity extends AppCompatActivity {
         if(this.inseeCode == null) {
             finish();
             System.err.println("Insee code not found");
-            ToastMessage.error(this);
+            Alert.error(this);
         }
     }
 
     public void save(View button) {
 
-        if(this.actionOnSave.equals(CREATE_ACTION)) {
-            createCity();
-        }
+        if (NetworkChecker.isNetworkActivated(this)) {
 
-        else if (this.actionOnSave.equals(UPDATE_ACTION)) {
-            updateCity();
+            if(this.actionOnSave.equals(CREATE_ACTION)) {
+                createCity();
+            }
+
+            else if (this.actionOnSave.equals(UPDATE_ACTION)) {
+                updateCity();
+            }
+
+            else {
+                finish();
+                System.err.println("The action on save must be 'create' or 'update' and set as extra on the intent start activity");
+                Alert.error(this);
+            }
         }
 
         else {
-            finish();
-            System.err.println("The action on save must be 'create' or 'update' and set as extra on the intent start activity");
-            ToastMessage.error(this);
+            Alert.noNetworkConnection(this);
         }
+
+
     }
 
     public String fetchCityNameFromExtras() {
@@ -203,7 +207,6 @@ public class CityEditActivity extends AppCompatActivity {
 
     public void createCity() {
         String url = "http://10.0.2.1/villes/";
-
         Map<String, String> params = fetchInfos();
 
         System.out.println(new JSONObject(params).toString());
@@ -223,26 +226,26 @@ public class CityEditActivity extends AppCompatActivity {
                                 System.out.println(result);
 
                                 if(result != null && result.isSuccessful()) {
-                                    ToastMessage.citySucessfullyCreated(self.nameEditText.getText().toString(), self);
+                                    Alert.citySucessfullyCreated(self.nameEditText.getText().toString(), self);
                                     finish();
                                 }
 
                                 else {
-                                    ToastMessage.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
+                                    Alert.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
                                 }
 
                             }
 
                             catch (JSONException e) {
                                 e.printStackTrace();
-                                ToastMessage.displayJSONReadError(self);
+                                Alert.displayJSONReadError(self);
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    ToastMessage.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
+                    Alert.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
                 }
             }
 
@@ -305,25 +308,25 @@ public class CityEditActivity extends AppCompatActivity {
 
                                 if(result != null && result.isSuccessful()) {
                                     finish();
-                                    ToastMessage.cityResultSave(self.cityName, ToastMessage.UPDATE_SUCCESSFUL, self);
+                                    Alert.cityResultSave(self.cityName, Alert.UPDATE_SUCCESSFUL, self);
                                 }
 
                                 else {
-                                    ToastMessage.cityResultSave(self.cityName, ToastMessage.UPDATE_UNSUCCESSFUL, self);
+                                    Alert.cityResultSave(self.cityName, Alert.UPDATE_UNSUCCESSFUL, self);
                                 }
 
                             }
 
                             catch (JSONException e) {
                                 e.printStackTrace();
-                                ToastMessage.displayJSONReadError(self);
+                                Alert.displayJSONReadError(self);
                             }
                         }
                     }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    ToastMessage.cityResultSave(self.cityName, ToastMessage.UPDATE_UNSUCCESSFUL, self);
+                    Alert.cityResultSave(self.cityName, Alert.UPDATE_UNSUCCESSFUL, self);
                 }
             }
 
