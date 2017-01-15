@@ -37,6 +37,12 @@
         android:id="@+id/gps_coordinates_filter_group_checkbox" />
 
     <CheckBox
+        android:text="@string/remoteness"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/remoteness_filter_checkbox" />
+
+    <CheckBox
         android:text="@string/inhabitantNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
