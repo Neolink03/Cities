@@ -232,6 +232,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         labels.put(City.INSEE_CODE_DB_COL, getString(R.string.inseeCode) + " : ");
         labels.put(City.POSTAL_CODE_DB_COL, getString(R.string.postalCode)  + " : ");
         labels.put(City.REGION_CODE_DB_COL, getString(R.string.regionCode)  + " : ");
+        labels.put(City.INHABITANT_NUMBER_DB_COL, getString(R.string.inhabitantNumber)  + " : ");
         StringBuilder adminDetailsText = new StringBuilder();
 
         if(! details.get(City.INSEE_CODE_DB_COL).isEmpty() ) {
@@ -247,6 +248,11 @@ public class CityDetailsActivity extends AppCompatActivity {
         if(! details.get(City.REGION_CODE_DB_COL).isEmpty() ) {
             adminDetailsText.append(labels.get(City.REGION_CODE_DB_COL))
                     .append(details.get(City.REGION_CODE_DB_COL)).append("\n");
+        }
+
+        if(! details.get(City.INHABITANT_NUMBER_DB_COL).isEmpty() ) {
+            adminDetailsText.append(labels.get(City.INHABITANT_NUMBER_DB_COL))
+                    .append(details.get(City.INHABITANT_NUMBER_DB_COL)).append("\n");
         }
 
         this.adminCityDetails.setText(adminDetailsText.toString());
