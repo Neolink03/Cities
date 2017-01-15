@@ -17,6 +17,9 @@
     <string name="inhabitantNumber">Nombre d\'habitants</string>
     <string name="gps_coodinates">Coordonnées GPS</string>
 
+    <string name="administration">Adminisration</string>
+    <string name="geography">Géographie</string>
+    
     <string name="create_city_title_edit_form">Création ville</string>
     <string name="update_city_title_edit_form">Modification ville</string>
     <string name="filter_title">Détails ville à afficher</string>

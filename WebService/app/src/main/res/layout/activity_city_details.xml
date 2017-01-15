@@ -19,10 +19,17 @@
         android:fontFamily="sans-serif"
         android:textSize="24sp"
         android:textStyle="normal|bold"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:lineSpacingExtra="8sp" />
 
     <TextView
-        android:id="@+id/city_details_textview"
+        android:id="@+id/city_admin_details_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/city_coordinates_details_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black" />

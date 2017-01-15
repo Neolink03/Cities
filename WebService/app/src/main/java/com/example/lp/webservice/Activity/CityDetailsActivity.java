@@ -25,7 +25,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class CityDetailsActivity extends AppCompatActivity {
 
@@ -34,8 +34,8 @@ public class CityDetailsActivity extends AppCompatActivity {
     private FloatingActionButton cityEditfloatingActionButton;
 
     private TextView cityNameTitleTextView;
-    private TextView cityDetails;
-    private ArrayList<TextView> cityDetailTextViews;
+    private TextView adminCityDetails;
+    private TextView coordinatesCityDetails;
 
     private City city;
     private JSONObject cityDetailsJsonObjet;
@@ -45,7 +45,10 @@ public class CityDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_details);
         this.cityNameTitleTextView = (TextView) findViewById(R.id.cityNameTitleTextView);
-        this.cityDetails = (TextView) findViewById(R.id.city_details_textview);
+
+        this.adminCityDetails = (TextView) findViewById(R.id.city_admin_details_textview);
+        this.coordinatesCityDetails = (TextView) findViewById(R.id.city_coordinates_details_textview);
+
         cityEditfloatingActionButton = (FloatingActionButton) findViewById(R.id.cityEditFloatingActionButton);
 
         displayNameFromExtras();
@@ -216,27 +219,65 @@ public class CityDetailsActivity extends AppCompatActivity {
     public void loadCityDetails() {
 
         if(null != this.city) {
-            ArrayList<String> details = city.getDetailsAsArray();
-            ArrayList<String> labels = new ArrayList<>();
-            labels.add(getString(R.string.inseeCode) + " : ");
-            labels.add(getString(R.string.postalCode)  + " : ");
-            labels.add(getString(R.string.regionCode)  + " : ");
-            labels.add(getString(R.string.latitude)  + " : ");
-            labels.add(getString(R.string.longitude)  + " : ");
-            labels.add(getString(R.string.remoteness)  + " : ");
-            labels.add(getString(R.string.inhabitantNumber)  + " : ");
+            HashMap<String, String> details = city.getDetailsAsHashMap();
 
-            StringBuilder detailsText = new StringBuilder();
-
-            for (int i = 0 ; i < details.size() ; i++) {
-
-                if ( ! details.get(i).isEmpty()) {
-                    detailsText.append(labels.get(i)).append(details.get(i)).append("\n");
-                }
-            }
-
-            this.cityDetails.setText(detailsText.toString());
+            loadAdminstrationCityDetails(details);
+            loadCoordinatesCityDetails(details);
         }
+    }
+
+    private void loadAdminstrationCityDetails(HashMap<String, String> details) {
+
+        HashMap<String, String> labels = new HashMap<>();
+        labels.put(City.INSEE_CODE_DB_COL, getString(R.string.inseeCode) + " : ");
+        labels.put(City.POSTAL_CODE_DB_COL, getString(R.string.postalCode)  + " : ");
+        labels.put(City.REGION_CODE_DB_COL, getString(R.string.regionCode)  + " : ");
+        StringBuilder adminDetailsText = new StringBuilder();
+
+        if(! details.get(City.INSEE_CODE_DB_COL).isEmpty() ) {
+            adminDetailsText.append(labels.get(City.INSEE_CODE_DB_COL))
+                    .append(details.get(City.INSEE_CODE_DB_COL)).append("\n");
+        }
+
+        if(! details.get(City.POSTAL_CODE_DB_COL).isEmpty() ) {
+            adminDetailsText.append(labels.get(City.POSTAL_CODE_DB_COL))
+                    .append(details.get(City.POSTAL_CODE_DB_COL)).append("\n");
+        }
+
+        if(! details.get(City.REGION_CODE_DB_COL).isEmpty() ) {
+            adminDetailsText.append(labels.get(City.REGION_CODE_DB_COL))
+                    .append(details.get(City.REGION_CODE_DB_COL)).append("\n");
+        }
+
+        this.adminCityDetails.setText(adminDetailsText.toString());
+    }
+
+    private void loadCoordinatesCityDetails(HashMap<String, String> details) {
+
+        HashMap<String, String> labels = new HashMap<>();
+        labels.put(City.LATITUDE_DB_COL, getString(R.string.latitude)  + " : ");
+        labels.put(City.LONGITUDE_DB_COL, getString(R.string.longitude)  + " : ");
+        labels.put(City.REMOTENESS_DB_COL, getString(R.string.remoteness)  + " : ");
+        labels.put(City.INHABITANT_NUMBER_DB_COL, getString(R.string.inhabitantNumber)  + " : ");
+
+        StringBuilder coordinatesDetailsText = new StringBuilder();
+
+        if(! details.get(City.LATITUDE_DB_COL).isEmpty() ) {
+            coordinatesDetailsText.append(labels.get(City.LATITUDE_DB_COL))
+                    .append(details.get(City.LATITUDE_DB_COL)).append("°\n");
+        }
+
+        if(! details.get(City.LONGITUDE_DB_COL).isEmpty() ) {
+            coordinatesDetailsText.append(labels.get(City.LONGITUDE_DB_COL))
+                    .append(details.get(City.LONGITUDE_DB_COL)).append("°\n");
+        }
+
+        if(! details.get(City.REMOTENESS_DB_COL).isEmpty() ) {
+            coordinatesDetailsText.append(labels.get(City.REMOTENESS_DB_COL))
+                    .append(details.get(City.REMOTENESS_DB_COL)).append(" km\n");
+        }
+
+        this.coordinatesCityDetails.setText(coordinatesDetailsText.toString());
     }
 
     public void displayCityEditFabIfLoadingDatasSuccessful() {

@@ -60,18 +60,6 @@ public class City {
         );
     }
 
-    public ArrayList<String> getDetailsAsArray() {
-        ArrayList<String> cityCharacteristics = new ArrayList<String>();
-        cityCharacteristics.add( ( (this.inseeCode != INVALID_VALUE) ? Integer.toString(this.inseeCode) : "") );
-        cityCharacteristics.add( ( (this.postalCode != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") );
-        cityCharacteristics.add( this.regionCode );
-        cityCharacteristics.add( ( (this.latitude != INVALID_VALUE) ? Double.toString(this.latitude) : "") );
-        cityCharacteristics.add( ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") );
-        cityCharacteristics.add( ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") );
-        cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.inhabitantNumber) : "") );
-        return cityCharacteristics;
-    }
-
     public HashMap<String, String> getDetailsAsHashMap() {
         HashMap<String, String> cityCharacteristics = new HashMap<>();
         cityCharacteristics.put( City.NAME_DB_COL, this.name );
