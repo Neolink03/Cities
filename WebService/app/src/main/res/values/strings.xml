@@ -37,4 +37,7 @@
 
     <string name="ok">OK</string>
 
+    <!-- SharedPreferences -->
+    <string name="prefs_app_previously_started">prefs_previously_started</string>
+
 </resources>

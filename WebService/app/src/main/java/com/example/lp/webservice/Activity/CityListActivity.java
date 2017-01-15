@@ -3,6 +3,7 @@ package com.example.lp.webservice.Activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,7 +42,7 @@ public class CityListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        displayPreferenceEditor();
+        displayPreferenceEditorAtFirstLaunchApplication();
 
         setContentView(R.layout.activity_city_list);
 
@@ -77,7 +78,21 @@ public class CityListActivity extends AppCompatActivity {
         searchCityList(null);
     }
 
+    public void displayPreferenceEditorAtFirstLaunchApplication() {
+        SharedPreferences prefs = getSharedPreferences(PreferenceActivity.APP_PREFERENCES, 0);
+        boolean previouslyStarted = prefs.getBoolean(getString(R.string.prefs_app_previously_started), false);
+
+        if(! previouslyStarted) {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.prefs_app_previously_started), Boolean.TRUE);
+            edit.apply();
+            displayPreferenceEditor();
+        }
+    }
+
     public void displayPreferenceEditor() {
+
+
         Intent toPreferenceActivity = new Intent(CityListActivity.this, PreferenceActivity.class);
         startActivity(toPreferenceActivity);
     }
