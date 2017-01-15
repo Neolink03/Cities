@@ -32,6 +32,7 @@ import java.util.List;
 
 public class CityListActivity extends AppCompatActivity {
 
+    private final Alert alertMessage = new Alert();
     private ListView cityList;
     private EditText citySearchBar;
     private CityList cityNameList;
@@ -122,7 +123,8 @@ public class CityListActivity extends AppCompatActivity {
             RequestQueue.getInstance(this).addToRequestQueue(fetchCityListRequest);
         }
         else {
-            Alert.noNetworkConnection(this);
+
+            this.alertMessage.noNetworkConnection(this);
         }
     }
 
@@ -176,7 +178,7 @@ public class CityListActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Alert.noNetworkConnection(self);
+                    self.alertMessage.noNetworkConnection(self);
                 }
 
             }

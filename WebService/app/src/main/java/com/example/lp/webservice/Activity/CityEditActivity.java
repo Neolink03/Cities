@@ -35,6 +35,8 @@ public class CityEditActivity extends AppCompatActivity {
     private final String UPDATE_ACTION = "update";
     private final String CREATE_ACTION = "create";
 
+    private final Alert alertMessage = new Alert();
+
     private String actionOnSave;
 
     private TextView titleEditFormTextView;
@@ -147,7 +149,7 @@ public class CityEditActivity extends AppCompatActivity {
         }
 
         else {
-            Alert.noNetworkConnection(this);
+            alertMessage.noNetworkConnection(this);
         }
 
 

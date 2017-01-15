@@ -28,4 +28,10 @@
     <string name="save">Sauvegarder</string>
     <string name="edit_preferences">Paramètres</string>
 
+    <!-- Alert Messages -->
+    <string name="no_network_error_message">Veuillez activer le Wi-fi ou les données mobiles</string>
+    <string name="no_network_error_title">Aucune connexion réseau</string>
+
+    <string name="ok">OK</string>
+
 </resources>

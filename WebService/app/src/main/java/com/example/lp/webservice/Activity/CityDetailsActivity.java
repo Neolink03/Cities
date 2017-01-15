@@ -29,6 +29,7 @@ import java.util.ArrayList;
 
 public class CityDetailsActivity extends AppCompatActivity {
 
+    private final Alert alertMessage = new Alert();
     private TextView tvCityName;
     private FloatingActionButton cityEditfloatingActionButton;
 
@@ -53,7 +54,7 @@ public class CityDetailsActivity extends AppCompatActivity {
             displayCityDetails();
         }
         else {
-            Alert.noNetworkConnection(this);
+            this.alertMessage.noNetworkConnection(this);
         }
     }
 
@@ -65,7 +66,7 @@ public class CityDetailsActivity extends AppCompatActivity {
             displayCityDetails();
         }
         else {
-            Alert.noNetworkConnection(this);
+            this.alertMessage.noNetworkConnection(this);
         }
     }
 
@@ -135,7 +136,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         }
 
         else {
-            Alert.noNetworkConnection(this);
+            this.alertMessage.noNetworkConnection(this);
         }
 
 
@@ -146,7 +147,6 @@ public class CityDetailsActivity extends AppCompatActivity {
 
         ArrayList<String> caracteristics = this.city.getDetailsAsArray();
 
-        if (NetworkChecker.isNetworkActivated(this)) {
             toCityEditActivity.putExtra("cityName", this.city.getName());
             toCityEditActivity.putExtra("inseeCode", caracteristics.get(0));
             toCityEditActivity.putExtra("postalCode", caracteristics.get(1));
@@ -160,11 +160,6 @@ public class CityDetailsActivity extends AppCompatActivity {
             toCityEditActivity.putExtra("actionOnSave", "update");
 
             startActivity(toCityEditActivity);
-        }
-
-        else {
-            Alert.noNetworkConnection(this);
-        }
 
     }
 
@@ -201,7 +196,7 @@ public class CityDetailsActivity extends AppCompatActivity {
         }
 
         else {
-            Alert.noNetworkConnection(this);
+            this.alertMessage.noNetworkConnection(this);
         }
 
     }
