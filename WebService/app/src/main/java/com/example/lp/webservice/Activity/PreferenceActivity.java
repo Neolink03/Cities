@@ -27,10 +27,11 @@ public class PreferenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle state){
         super.onCreate(state);
-
         setContentView(R.layout.activity_preference);
+
         settings = getSharedPreferences(APP_PREFERENCES, 0);
         loadFilterListCheckBoxes();
+        displayCurrentSelectedFilters();
     }
 
     @Override
@@ -50,6 +51,37 @@ public class PreferenceActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void displayCurrentSelectedFilters() {
+        String selectedFilters = settings.getString(FILTERS, null);
+
+        HashMap<String, Integer> checkBoxByFilter = new HashMap<>();
+        checkBoxByFilter.put(City.POSTAL_CODE_DB_COL, R.id.postal_code_filter_checkbox);
+        checkBoxByFilter.put(City.REGION_CODE_DB_COL, R.id.region_code_filter_checkbox);
+        checkBoxByFilter.put(City.LATITUDE_DB_COL, R.id.gps_coordinates_filter_group_checkbox);
+        checkBoxByFilter.put(City.LONGITUDE_DB_COL, R.id.gps_coordinates_filter_group_checkbox);
+        checkBoxByFilter.put(City.REMOTENESS_DB_COL, R.id.gps_coordinates_filter_group_checkbox);
+        checkBoxByFilter.put(City.INHABITANT_NUMBER_DB_COL, R.id.inhabitant_number_filter_checkbox);
+
+        if (null != selectedFilters) {
+            String[] selectedFiltersList = selectedFilters.split("-");
+
+            for (String filter :
+                    selectedFiltersList) {
+
+                if ((! filter.equals(City.NAME_DB_COL))
+                        && (! filter.equals(City.INSEE_CODE_DB_COL))) {
+
+                    CheckBox checboxFilter = (CheckBox) findViewById(checkBoxByFilter.get(filter));
+
+                    if (null != checboxFilter) {
+                        checboxFilter.setChecked(true);
+                    }
+                }
+            }
+        }
+
     }
 
     public void loadFilterListCheckBoxes() {
