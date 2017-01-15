@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +39,7 @@ public class CityEditActivity extends AppCompatActivity {
     private final Alert alertMessage = new Alert();
 
     private String actionOnSave;
+    private City city;
 
     private TextView titleEditFormTextView;
     private String cityName;
@@ -63,8 +65,9 @@ public class CityEditActivity extends AppCompatActivity {
         loadEditTexts();
         getActionFromExtras();
         getCityNameFromExtras();
+        getInseeCodeFromExtras();
 
-        preFillFormWithPreviousInfosFromExtras();
+        preFillFormWithCityDetails();
 
         titleEditFormTextView = (TextView) findViewById(R.id.tvCityName);
         displayTitleFromExtras();
@@ -281,9 +284,67 @@ public class CityEditActivity extends AppCompatActivity {
 
     }
 
-    public void updateCity() {
+    public void preFillFormWithCityDetails() {
 
-        getInseeCodeFromExtras();
+        final CityEditActivity self = this;
+        if (NetworkChecker.isNetworkActivated(this)) {
+
+            String ipServer = "http://10.0.2.1";
+            String url = ipServer + "/villes/" + this.inseeCode;
+
+            // The request always return a JsonArray
+            JsonArrayRequest requestToFetchCityJsonArray = new JsonArrayRequest
+                    (Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray cityListJSONArrayResponse) {
+                            loadCityDetailsFromJSONArray(cityListJSONArrayResponse);
+                            preFillForm(self.city.getDetailsAsHashMap());
+
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                            Alert.displayUnexpectedServerResponse(getApplicationContext());
+                        }
+                    });
+
+            RequestQueue.getInstance(this).addToRequestQueue(requestToFetchCityJsonArray);
+        }
+
+        else {
+            this.alertMessage.noNetworkConnection(this);
+        }
+
+    }
+
+    public void preFillForm(HashMap<String, String> infos) {
+
+        if(this.actionOnSave != null && this.actionOnSave.equals(UPDATE_ACTION)) {
+            this.nameEditText.setText(infos.get(City.NAME_DB_COL));
+            this.inseeCodeEditText.setText(infos.get(City.INSEE_CODE_DB_COL));
+            this.postalCodeEditText.setText(infos.get(City.POSTAL_CODE_DB_COL));
+            this.regionCodeEditText.setText(infos.get(City.REGION_CODE_DB_COL));
+            this.latitudeEditText.setText(infos.get(City.LATITUDE_DB_COL));
+            this.longitudeEditText.setText(infos.get(City.LONGITUDE_DB_COL));
+            this.remotenessEditText.setText(infos.get(City.REMOTENESS_DB_COL));
+            this.inhabitantNumberEditText.setText(infos.get(City.INHABITANT_NUMBER_DB_COL));
+        }
+
+    }
+
+    public void loadCityDetailsFromJSONArray(JSONArray cityListJSONArray) {
+        try {
+            this.city = City.createFromJSONArray(cityListJSONArray);
+        }
+
+        catch (JSONException exception) {
+            exception.printStackTrace();
+            Alert.displayJSONReadError(getApplicationContext());
+        }
+    }
+
+    public void updateCity() {
 
         String ipServer = "http://10.0.2.1";
         String url = ipServer + "/villes/" + this.inseeCode;

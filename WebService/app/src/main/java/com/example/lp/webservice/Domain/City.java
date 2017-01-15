@@ -5,6 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by jonathan on 04/12/16.
@@ -68,6 +69,19 @@ public class City {
         cityCharacteristics.add( ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") );
         cityCharacteristics.add( ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") );
         cityCharacteristics.add( ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.inhabitantNumber) : "") );
+        return cityCharacteristics;
+    }
+
+    public HashMap<String, String> getDetailsAsHashMap() {
+        HashMap<String, String> cityCharacteristics = new HashMap<>();
+        cityCharacteristics.put( City.NAME_DB_COL, this.name );
+        cityCharacteristics.put( City.INSEE_CODE_DB_COL, ( (this.inseeCode != INVALID_VALUE) ? Integer.toString(this.inseeCode) : "") );
+        cityCharacteristics.put( City.POSTAL_CODE_DB_COL, ( (this.postalCode != INVALID_VALUE) ? Integer.toString(this.postalCode) : "") );
+        cityCharacteristics.put( City.REGION_CODE_DB_COL, this.regionCode );
+        cityCharacteristics.put( City.LATITUDE_DB_COL, ( (this.latitude != INVALID_VALUE) ? Double.toString(this.latitude) : "") );
+        cityCharacteristics.put( City.LONGITUDE_DB_COL, ( (this.longitude != INVALID_VALUE) ? Double.toString(this.longitude) : "") );
+        cityCharacteristics.put( City.REMOTENESS_DB_COL, ( (this.remoteness != INVALID_VALUE) ? Double.toString(this.remoteness) : "") );
+        cityCharacteristics.put( City.INHABITANT_NUMBER_DB_COL, ( (this.inhabitantNumber != INVALID_VALUE) ? Integer.toString(this.inhabitantNumber) : "") );
         return cityCharacteristics;
     }
 
