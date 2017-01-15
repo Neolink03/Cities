@@ -24,6 +24,10 @@
     <string name="update_city_title_edit_form">Modification ville</string>
     <string name="filter_title">Détails ville à afficher</string>
 
+    <string name="fill_all_required_fields_error_message">Veuillez remplir tous les champs obligatoires (marqués par une *).</string>
+    <string name="fill_all_required_fields_error_title">Champs obligatoires non remplis</string>
+
+
     <!-- Menu -->
     <string name="ajouter_une_ville">Ajouter une ville</string>
     <string name="editCityDetailsMenu">Modifier</string>
@@ -32,12 +36,16 @@
     <string name="edit_preferences">Paramètres</string>
 
     <!-- Alert Messages -->
-    <string name="no_network_error_message">Veuillez activer le Wi-fi ou les données mobiles</string>
+    <string name="no_network_error_message">Veuillez activer le Wi-fi ou les données mobiles.</string>
     <string name="no_network_error_title">Aucune connexion réseau</string>
 
     <string name="ok">OK</string>
 
     <!-- SharedPreferences -->
     <string name="prefs_app_previously_started">prefs_previously_started</string>
+
+    <!-- Data operation -->
+    <string name="city_successfully_created">a bien été créée</string>
+    <string name="city_unsuccessfully_created"> n\'a pas pu être créée</string>
 
 </resources>

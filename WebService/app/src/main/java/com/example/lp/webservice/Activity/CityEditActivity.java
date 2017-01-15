@@ -65,9 +65,11 @@ public class CityEditActivity extends AppCompatActivity {
         loadEditTexts();
         getActionFromExtras();
         getCityNameFromExtras();
-        getInseeCodeFromExtras();
+        showRequiredFieldLabel();
 
-        preFillFormWithCityDetails();
+        if (this.actionOnSave.equals(UPDATE_ACTION)) {
+            preFillFormWithCityDetails();
+        }
 
         titleEditFormTextView = (TextView) findViewById(R.id.tvCityName);
         displayTitleFromExtras();
@@ -105,6 +107,19 @@ public class CityEditActivity extends AppCompatActivity {
         this.inhabitantNumberEditText = (EditText) findViewById(R.id.inhabitantNumberEditText);
     }
 
+    private void showRequiredFieldLabel() {
+        TextView nameEditLabelTextView = (TextView) findViewById(R.id.nameEditLabelTextView);
+
+        if (nameEditLabelTextView != null) {
+            nameEditLabelTextView.append(" *");
+        }
+
+        TextView inseeCodeEditLabelTextView = (TextView) findViewById(R.id.inseeCodeEditLabelTextView);
+        if (inseeCodeEditLabelTextView != null) {
+            inseeCodeEditLabelTextView.append(" *");
+        }
+    }
+
     public void getActionFromExtras() {
 
         this.actionOnSave = getIntent().getStringExtra("actionOnSave");
@@ -132,10 +147,21 @@ public class CityEditActivity extends AppCompatActivity {
         }
     }
 
+    public boolean isNameAndInseeCodeFilled() {
+        if(nameEditText.getText().toString().isEmpty()) {
+            return false;
+        }
+
+        if(inseeCodeEditText.getText().toString().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
     public void save(View button) {
 
-        if (NetworkChecker.isNetworkActivated(this)) {
-
+        if(isNameAndInseeCodeFilled()) {
             if(this.actionOnSave.equals(CREATE_ACTION)) {
                 createCity();
             }
@@ -152,9 +178,8 @@ public class CityEditActivity extends AppCompatActivity {
         }
 
         else {
-            alertMessage.noNetworkConnection(this);
+            this.alertMessage.requiredFieldsNotFilled(this);
         }
-
 
     }
 
@@ -211,62 +236,70 @@ public class CityEditActivity extends AppCompatActivity {
     }
 
     public void createCity() {
-        String url = "http://10.0.2.1/villes/";
-        Map<String, String> params = fetchInfos();
 
-        System.out.println(new JSONObject(params).toString());
-        try {
-            JSONArray jsonRequestBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
-            System.out.println(jsonRequestBody.toString());
+        if (NetworkChecker.isNetworkActivated(this)) {
 
-            final CityEditActivity self = this;
+            String url = "http://10.0.2.1/villes/";
+            Map<String, String> params = fetchInfos();
 
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, jsonRequestBody,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            try {
-                                VolleyLog.v("Response:%n %s", response.toString(4));
-                                RestApiResponse result = RestApiResponse.createFromJsonArray(response);
-                                System.out.println(result);
+            try {
+                JSONArray jsonRequestBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
+                System.out.println(jsonRequestBody.toString());
 
-                                if(result != null && result.isSuccessful()) {
-                                    Alert.citySucessfullyCreated(self.nameEditText.getText().toString(), self);
-                                    finish();
+                final CityEditActivity self = this;
+
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.POST, url, jsonRequestBody,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    VolleyLog.v("Response:%n %s", response.toString(4));
+                                    RestApiResponse result = RestApiResponse.createFromJsonArray(response);
+                                    System.out.println(result);
+
+                                    if(result != null && result.isSuccessful()) {
+                                        Alert.cityResultSave(self.cityName, getString(R.string.city_successfully_created), self);
+                                        finish();
+                                    }
+
+                                    else {
+                                        Alert.cityResultSave(self.cityName, getString(R.string.city_unsuccessfully_created), self);
+                                    }
+
                                 }
 
-                                else {
-                                    Alert.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
+                                catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Alert.displayJSONReadError(self);
                                 }
-
                             }
-
-                            catch (JSONException e) {
-                                e.printStackTrace();
-                                Alert.displayJSONReadError(self);
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.e("Error: ", error.getMessage());
-                    Alert.cityUnSucessfullyCreated(self.nameEditText.getText().toString(), self);
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getMessage());
+                        Alert.cityResultSave(self.cityName, getString(R.string.city_unsuccessfully_created), self);
+                    }
                 }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        return headers;
+                    }
+                };
+
+                RequestQueue.getInstance(this).addToRequestQueue(request);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
-            };
-
-            RequestQueue.getInstance(this).addToRequestQueue(request);
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
+
+        else {
+            this.alertMessage.noNetworkConnection(this);
+        }
+
     }
 
     public void preFillFormWithPreviousInfosFromExtras() {
@@ -289,6 +322,7 @@ public class CityEditActivity extends AppCompatActivity {
         final CityEditActivity self = this;
         if (NetworkChecker.isNetworkActivated(this)) {
 
+            getInseeCodeFromExtras();
             String ipServer = "http://10.0.2.1";
             String url = ipServer + "/villes/" + this.inseeCode;
 
@@ -346,65 +380,71 @@ public class CityEditActivity extends AppCompatActivity {
 
     public void updateCity() {
 
-        String ipServer = "http://10.0.2.1";
-        String url = ipServer + "/villes/" + this.inseeCode;
-        System.out.println("update");
-        System.out.println(this.inseeCode);
+        if (NetworkChecker.isNetworkActivated(this)) {
+            String ipServer = "http://10.0.2.1";
+            String url = ipServer + "/villes/" + this.inseeCode;
+            System.out.println("update");
+            System.out.println(this.inseeCode);
 
-        Map<String, String> params = fetchInfos();
+            Map<String, String> params = fetchInfos();
 
-        System.out.println(new JSONObject(params).toString());
-        try {
-            JSONArray jsonRequestBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
-            System.out.println(jsonRequestBody.toString());
+            System.out.println(new JSONObject(params).toString());
+            try {
+                JSONArray jsonRequestBody = new JSONArray("[ " + new JSONObject(params).toString() + " ]");
+                System.out.println(jsonRequestBody.toString());
 
-            final CityEditActivity self = this;
+                final CityEditActivity self = this;
 
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.PUT, url, jsonRequestBody,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            try {
-                                VolleyLog.v("Response:%n %s", response.toString(4));
-                                RestApiResponse result = RestApiResponse.createFromJsonArray(response);
-                                System.out.println(result);
+                JsonArrayRequest request = new JsonArrayRequest(Request.Method.PUT, url, jsonRequestBody,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                try {
+                                    VolleyLog.v("Response:%n %s", response.toString(4));
+                                    RestApiResponse result = RestApiResponse.createFromJsonArray(response);
+                                    System.out.println(result);
 
-                                if(result != null && result.isSuccessful()) {
-                                    finish();
-                                    Alert.cityResultSave(self.cityName, Alert.UPDATE_SUCCESSFUL, self);
+                                    if(result != null && result.isSuccessful()) {
+                                        finish();
+                                        Alert.cityResultSave(self.cityName, Alert.UPDATE_SUCCESSFUL, self);
+                                    }
+
+                                    else {
+                                        Alert.cityResultSave(self.cityName, Alert.UPDATE_UNSUCCESSFUL, self);
+                                    }
+
                                 }
 
-                                else {
-                                    Alert.cityResultSave(self.cityName, Alert.UPDATE_UNSUCCESSFUL, self);
+                                catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Alert.displayJSONReadError(self);
                                 }
-
                             }
-
-                            catch (JSONException e) {
-                                e.printStackTrace();
-                                Alert.displayJSONReadError(self);
-                            }
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    VolleyLog.e("Error: ", error.getMessage());
-                    Alert.cityResultSave(self.cityName, Alert.UPDATE_UNSUCCESSFUL, self);
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getMessage());
+                        Alert.cityResultSave(self.cityName, Alert.UPDATE_UNSUCCESSFUL, self);
+                    }
                 }
+
+                ) {
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> headers = new HashMap<String, String>();
+                        headers.put("Content-Type", "application/json");
+                        return headers;
+                    }
+                };
+
+                RequestQueue.getInstance(this).addToRequestQueue(request);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+        }
 
-            ) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json");
-                    return headers;
-                }
-            };
-
-            RequestQueue.getInstance(this).addToRequestQueue(request);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        else {
+            this.alertMessage.noNetworkConnection(this);
         }
 
     }

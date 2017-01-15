@@ -7,6 +7,8 @@ import android.widget.Toast;
 
 import com.example.lp.webservice.R;
 
+import java.util.ArrayList;
+
 /**
  * Created by jonathan on 10/12/16.
  */
@@ -45,6 +47,21 @@ public class Alert {
 
         builder.setMessage(applicationContext.getString(R.string.no_network_error_message))
                 .setTitle(applicationContext.getString(R.string.no_network_error_title));
+
+        builder.setPositiveButton(applicationContext.getString(R.string.ok), new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {}
+        });
+
+        AlertDialog dialog = builder.create();
+
+        dialog.show();
+    }
+
+    public void requiredFieldsNotFilled(Context applicationContext) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(applicationContext);
+
+        builder.setMessage(applicationContext.getString(R.string.fill_all_required_fields_error_message))
+                .setTitle(applicationContext.getString(R.string.fill_all_required_fields_error_title));
 
         builder.setPositiveButton(applicationContext.getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {}
