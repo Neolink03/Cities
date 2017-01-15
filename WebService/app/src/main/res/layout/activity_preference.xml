@@ -22,23 +22,27 @@
         android:text="@string/postalCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/postal_code_filter_checkbox" />
+        android:id="@+id/postal_code_filter_checkbox"
+        android:checked="true" />
 
     <CheckBox
         android:text="@string/regionCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/region_code_filter_checkbox" />
+        android:id="@+id/region_code_filter_checkbox"
+        android:checked="true" />
 
     <CheckBox
         android:text="@string/gps_coodinates"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/gps_coordinates_filter_group_checkbox" />
+        android:id="@+id/gps_coordinates_filter_group_checkbox"
+        android:checked="true" />
 
     <CheckBox
         android:text="@string/inhabitantNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/inhabitant_number_filter_checkbox" />
+        android:id="@+id/inhabitant_number_filter_checkbox"
+        android:checked="true" />
 </LinearLayout>
