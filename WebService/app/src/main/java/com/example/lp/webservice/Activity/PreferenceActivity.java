@@ -91,7 +91,7 @@ public class PreferenceActivity extends AppCompatActivity {
         this.filterListCheckBoxes.put(R.id.region_code_filter_checkbox, City.REGION_CODE_DB_COL);
         this.filterListCheckBoxes.put(R.id.gps_coordinates_filter_group_checkbox, City.LATITUDE_DB_COL + "-" + City.LONGITUDE_DB_COL);
         this.filterListCheckBoxes.put(R.id.remoteness_filter_checkbox, City.REMOTENESS_DB_COL);
-        this.filterListCheckBoxes.put(R.id.inhabitant_number_filter_checkbox, City.POSTAL_CODE_DB_COL);
+        this.filterListCheckBoxes.put(R.id.inhabitant_number_filter_checkbox, City.INHABITANT_NUMBER_DB_COL);
     }
 
     public String getSelectedFilters() {
